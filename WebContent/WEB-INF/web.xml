@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="WebApp_ID" version="2.5">
+    
+    <display-name>ZhongheWeiHelper</display-name>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+<!-- lottery -->
+     <servlet>
+        <servlet-name>lottery</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>lottery</servlet-name>
+        <url-pattern>/lottery/*</url-pattern>
+    </servlet-mapping>
+<!-- ******* -->   
+
+<!-- vote -->    
+    <servlet>
+        <servlet-name>vote</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vote</servlet-name>
+        <url-pattern>/vote/*</url-pattern>
+    </servlet-mapping>
+<!-- **** -->   
+
+<!-- chicken -->    
+    <servlet>
+        <servlet-name>chicken</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>chicken</servlet-name>
+        <url-pattern>/chicken/*</url-pattern>
+    </servlet-mapping>
+<!-- ******* --> 
+
+<!-- order -->  
+    <servlet>
+        <servlet-name>order</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>order</servlet-name>
+        <url-pattern>/order/*</url-pattern>
+    </servlet-mapping>
+<!-- ***** -->    
+
+<!-- recommend -->    
+    <servlet>
+        <servlet-name>recommend</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>recommend</servlet-name>
+        <url-pattern>/recommend/*</url-pattern>
+    </servlet-mapping>
+<!-- ********* -->  
+
+<!-- song -->    
+    <servlet>
+        <servlet-name>song</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>song</servlet-name>
+        <url-pattern>/song/*</url-pattern>
+    </servlet-mapping>
+<!-- **** -->   
+
+<!-- weather -->    
+    <servlet>
+        <servlet-name>weather</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>weather</servlet-name>
+        <url-pattern>/weather/*</url-pattern>
+    </servlet-mapping>
+<!-- ******* --> 
+
+
+    
+</web-app>
