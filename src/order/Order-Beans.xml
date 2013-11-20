@@ -4,11 +4,29 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
 
-  
+   <!-- Definition for studentJDBCTemplate bean -->
+   <bean id="OrderDishDAO" class="order.OrderDishDAO">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <bean id="OrderMenuDAO" class="order.OrderMenuDAO">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <bean id="OrderStoreDAO" class="order.OrderStoreDAO">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <bean id="OrderUserDAO" class="order.OrderUserDAO">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
 
-   <!-- Example Definition for OrderDishDAO bean -->
-   <!-- <bean id="OrderDishDAO" class="TestJDBCTemplate.OrderDishDAO"> -->
-      <!-- <property name="dataSource"  ref="dataSource" /> -->    
-   <!-- </bean> -->
-      
+   <bean id="OrderUserOrderDAO" class="order.OrderUserOrderDAO">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+
+    <bean id="OrderWikiDAO" class="order.OrderWikiDAO">
+      <property name="dataSource"  ref="dataSource" />    
+    </bean>
+
 </beans>
