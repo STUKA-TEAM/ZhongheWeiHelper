@@ -25,6 +25,12 @@ public class OrderUserController {
     public String PlaceOrder() {
         return null;
     }
+    
+    @RequestMapping(value = "/user/order", method = RequestMethod.GET)
+    @ResponseBody
+    public String getOrder() {
+        return null;
+    }
 
     @RequestMapping(value = "/user/wiki", method = RequestMethod.GET)
     @ResponseBody

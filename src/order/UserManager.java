@@ -90,6 +90,26 @@ public class UserManager {
             userOrderDAO.createOrderUserOrder(userOrder);
         }
     }
+
+    /**
+     * 
+     * @Title: getMyOrder
+     * @Description: get user's today order
+     * @param openId
+     * @return JSON
+     * @date 2013年11月21日
+     */
+    public String getMyOrder(String openId) {
+        OrderUserDAO userDAO = (OrderUserDAO) mContext.getBean("OrderUserDAO");
+        OrderUser user = userDAO.getOrderUserByOpenId(openId);
+        OrderUserOrderDAO userOrderDAO = (OrderUserOrderDAO) mContext
+                .getBean("OrderUserOrderDAO");
+        List<OrderUserOrder> userOrder = userOrderDAO.getOrderUserOrder(
+                user.getUserId(), getDate());
+        Gson gson = new Gson();
+        return gson.toJson(userOrder);
+    }
+
     /**
      * 
      * @Title: setOrderWiki
