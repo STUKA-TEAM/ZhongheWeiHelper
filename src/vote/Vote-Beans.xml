@@ -10,5 +10,21 @@
    <!-- <bean id="OrderDishDAO" class="TestJDBCTemplate.OrderDishDAO"> -->
       <!-- <property name="dataSource"  ref="dataSource" /> -->    
    <!-- </bean> -->
+   
+   <bean id="VoteItemDAO" class="vote.VoteItemDAO">
+      <property name="dataSource" ref="dataSource" />   
+   </bean>
+   
+   <bean id="ChoiceDAO" class="vote.ChoiceDAO">
+      <property name="dataSource" ref="dataSource" />   
+   </bean>
+   
+   <bean id="AdviceDAO" class="vote.AdviceDAO">
+      <property name="dataSource" ref="dataSource" />   
+   </bean>   
+
+   <bean id="VoteActivityDAO" class="vote.VoteActivityDAO">
+      <property name="dataSource" ref="dataSource" />   
+   </bean> 
       
 </beans>
