@@ -1,6 +1,7 @@
 package order;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -98,14 +99,16 @@ public class OrderUserOrderDAO {
     // Query
     /**
      * 
-     * @param id
+     * @param userId
+     * @param date
      * @return the OrderUserOrder object
      */
-    public OrderUserOrder getOrderUserOrderById(int id) {
-        String SQL = "select * from order_user_order where UserId = ?";
-        OrderUserOrder orderUserOrder = jdbcTemplate.queryForObject(SQL,
-                new Object[] { id }, new OrderUserOrderMapper());
-        return orderUserOrder;
+    public List<OrderUserOrder> getOrderUserOrder(int userId, Date date) {
+        String SQL = "select * from order_user_order where UserId = ? and"
+                + " Date = ?";
+        List<OrderUserOrder> orderUserOrders = jdbcTemplate.query(SQL,
+                new Object[] { userId, date }, new OrderUserOrderMapper());
+        return orderUserOrders;
     }
 
     /**

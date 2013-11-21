@@ -15,11 +15,11 @@ import com.google.gson.Gson;
  * @author dai
  * @date 2013年11月10日
  */
-public class StoreOrderManager {
+public class StoreManager {
 
     private ApplicationContext mContext;
 
-    public StoreOrderManager() {
+    public StoreManager() {
         mContext = new ClassPathXmlApplicationContext("All-Modules.xml");
     }
 
