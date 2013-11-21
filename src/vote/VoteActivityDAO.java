@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -118,6 +119,34 @@ public class VoteActivityDAO {
 		return effectedRowNum;
 	}
 	
+    /**
+     * @Title: updateStartDateAndStatus
+     * @Description: 用于发布活动
+     * @param voteId
+     * @param startDate
+     * @param voteStatus
+     * @return
+     */
+	public int updateStartDateAndStatus(int voteId, Timestamp startDate, int voteStatus){
+		String SQL = "UPDATE vote_activity SET StartDate = ?, VoteStatus = ? WHERE VoteId = ?";
+		int effectedRowNum = jdbcTemplate.update(SQL, startDate, voteStatus, voteId);
+		return effectedRowNum;
+	}
+	
+	/**
+	 * @Title: updateEndDateAndStatus
+	 * @Description: 用于关闭活动
+	 * @param voteId
+	 * @param endDate
+	 * @param voteStatus
+	 * @return
+	 */
+	public int updateEndDateAndStatus(int voteId, Timestamp endDate, int voteStatus){
+		String SQL = "UPDATE vote_activity SET EndDate = ?, VoteStatus = ? WHERE VoteId = ?";
+		int effectedRowNum = jdbcTemplate.update(SQL, endDate, voteStatus, voteId);
+		return effectedRowNum;
+	}
+	
 	//delete
 	/**
 	 * @Title: deleteByVoteId
@@ -171,6 +200,24 @@ public class VoteActivityDAO {
 		vActivity.setViList(vList);
 		
 		return vActivity;
+	}
+	
+	/**
+	 * @Title: getActivityListByStatus
+	 * @Description: 根据活动状态获取一组活动记录信息
+	 * @param voteStatus
+	 * @return
+	 */
+	public List<VoteActivity> getActivityListByStatus(int voteStatus){
+		String SQL = "SELECT * FROM vote_activity WHERE VoteStatus = ?";
+		List<VoteActivity> vList = jdbcTemplate.query(SQL, new Object[]{voteStatus}, new VoteActivityFullMapper());
+		
+		for (int i = 0; i < vList.size(); i++) {
+			VoteActivity vActivity = vList.get(i);
+			vActivity.setViList(getVoteItemList(vActivity.getVoteId()));
+		}
+		
+		return vList;
 	}
 	
 	/**
