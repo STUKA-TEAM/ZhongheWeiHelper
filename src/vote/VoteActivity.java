@@ -29,38 +29,6 @@ public class VoteActivity {
 	public VoteActivity(){
 		
 	}
-	public VoteActivity(String voteTitle, String voteSummary, String votePicture, 
-			Timestamp startDate, Timestamp endDate, int isMultiChoice, int maxChoice, 
-			int enableAdvice, List<VoteItem> viList){
-		this.voteTitle = voteTitle;
-		this.voteSummary = voteSummary;
-		this.votePicture = votePicture;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.isMultiChoice = isMultiChoice;
-		this.maxChoice = maxChoice;
-		this.enableAdvice = enableAdvice;
-		this.viList = viList;
-		
-		this.voteId = -1;
-		this.voteStatus = -1;
-	}
-	public VoteActivity(int voteId, String voteTitle, String voteSummary, String votePicture, 
-			Timestamp startDate, Timestamp endDate, int isMultiChoice, int maxChoice, 
-			int enableAdvice, List<VoteItem> viList){
-		this.voteTitle = voteTitle;
-		this.voteSummary = voteSummary;
-		this.votePicture = votePicture;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.isMultiChoice = isMultiChoice;
-		this.maxChoice = maxChoice;
-		this.enableAdvice = enableAdvice;
-		this.viList = viList;		
-		this.voteId = voteId;
-		
-		this.voteStatus = -1;
-	}
 	/**
 	 * @return the voteId
 	 */

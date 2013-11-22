@@ -16,3 +16,5 @@
 /build
 
 /WebContent/META-INF/*.MF
+
+/.settings/*.prefs
