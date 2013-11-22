@@ -1,5 +1,5 @@
 # Host: 127.0.0.1  (Version: 5.5.32)
-# Date: 2013-11-16 18:04:05
+# Date: 2013-11-22 18:10:50
 # Generator: MySQL-Front 5.3  (Build 4.43)
 
 /*!40101 SET NAMES utf8 */;
@@ -35,6 +35,8 @@ CREATE TABLE `lottery_lucky_record` (
   `LuckyId` int(11) NOT NULL AUTO_INCREMENT COMMENT '中奖记录ID',
   `PrizeId` int(11) NOT NULL DEFAULT '0' COMMENT '奖项ID',
   `OpenId` varchar(30) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `PrizeKey` varchar(15) NOT NULL DEFAULT '' COMMENT '中奖码',
+  `PrizeStatus` int(11) NOT NULL DEFAULT '0' COMMENT '是否已兑奖',
   PRIMARY KEY (`LuckyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -93,12 +95,13 @@ CREATE TABLE `order_dishes` (
   `Discribe` varchar(500) NOT NULL DEFAULT '' COMMENT '菜品描述',
   `Picture` varchar(100) DEFAULT NULL COMMENT '菜品图片',
   PRIMARY KEY (`DishId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "order_dishes"
 #
 
+INSERT INTO `order_dishes` VALUES (3,'鱼香肉丝',19.50,'美味可口，香气难挡','/XXXXX/XXX.jpg'),(4,'鱼香肉丝',19.50,'美味可口，香气难挡','/XXXXX/XXX.jpg'),(5,'鱼香肉丝',19.50,'美味可口，香气难挡','/XXXXX/XXX.jpg'),(7,'小鸡蘑菇',30.00,'美味可口，香气难挡','/XXXXX/XXX.jpg'),(8,'鱼香肉丝',19.50,'美味可口，香气难挡','/XXXXX/XXX.jpg'),(9,'鱼香肉丝',19.50,'美味可口，香气难挡','/XXXXX/XXX.jpg'),(10,'鱼香肉丝',19.50,'美味可口，香气难挡','/XXXXX/XXX.jpg'),(11,'鱼香肉丝',19.50,'美味可口，香气难挡','/XXXXX/XXX.jpg');
 
 #
 # Structure for table "order_menu"
