@@ -27,4 +27,7 @@ public final class Constant {
     public static final int ACTIVITY_RELEASE_STATUS = 3;
     public static final int ACTIVITY_CLOSED_STATUS = 4;
     
+    /*random generator*/
+    public static final String ALL_CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
 }
