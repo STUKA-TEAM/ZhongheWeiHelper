@@ -108,6 +108,20 @@
     </servlet-mapping>
 <!-- ******* --> 
 
+<!-- tools -->    
+    <servlet>
+        <servlet-name>tools</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>tools</servlet-name>
+        <url-pattern>/tools/*</url-pattern>
+    </servlet-mapping>
+<!-- ******* -->
+
 <!-- charset-filter -->
 <filter>
   <filter-name>characterEncodingFilter</filter-name>
