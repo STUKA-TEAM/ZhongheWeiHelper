@@ -12,14 +12,18 @@ public final class Constant {
     public static final String gLbsAk = "AE1f0f9ccf32d1bba22d2bc319cc68e5";
     
 	/*image*/
-	public static final String IMAGE_WINDOWS_PATH = "\\images\\";
-	public static final String IMAGE_NORMAL_PATH = "/images/";
+	public static final String IMAGE_WINDOWS_PATH = "\\userimages\\";
+	public static final String IMAGE_NORMAL_PATH = "/userimages/";
 	public static final String IMAGE_TYPE_GIF = "gif";
 	public static final String IMAGE_TYPE_JPG = "jpg";
 	public static final String IMAGE_TYPE_JPEG = "jpeg";
 	public static final String IMAGE_TYPE_BMP = "bmp";  
 	public static final String IMAGE_TYPE_PNG = "png";
     public static final String IMAGE_TYPE_PSD = "psd";   // photoshop
+    
+    /*image server path*/
+    public static final String IMAGE_PATH = "userimages/";
+    
     
     /*activity status*/
     public static final int ACTIVITY_DRAFT_STATUS = 1;

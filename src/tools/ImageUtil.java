@@ -36,8 +36,8 @@ public class ImageUtil {
      *            缩放比例
      * @return String 最终图像存放地址
      */
-    public final static String scaleRatio(InputStream srcImage,
-            String serverPath, double ratio) {
+    public String scaleRatio(InputStream srcImage,
+            double ratio, String imageType) {
         String destImagePath = null;
         try {
             // 获取源图像长宽
@@ -55,8 +55,7 @@ public class ImageUtil {
             BufferedImage img = drawPicture(width, height, image);
 
             // 保存新图像到动态生成地址，并设置用户访问路径
-            destImagePath = saveNewImage(img, serverPath,
-                    Constant.IMAGE_TYPE_PNG);
+            destImagePath = saveNewImage(img, imageType);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -77,8 +76,7 @@ public class ImageUtil {
      *            目标图像宽度
      * @return String 最终图像存放地址
      */
-    public final static String scaleCut(InputStream srcImage,
-            String serverPath, int destWidth, int destHeight) {
+    public String scaleCut(InputStream srcImage, int destWidth, int destHeight,String imageType) {
         String destImagePath = null;
         try {
             // 获取源图像长宽
@@ -114,8 +112,7 @@ public class ImageUtil {
                         transHeight, image);
 
                 // 保存新图像到动态生成地址，并设置用户访问路径
-                destImagePath = saveNewImage(transImg, serverPath,
-                        Constant.IMAGE_TYPE_PNG);
+                destImagePath = saveNewImage(transImg, imageType);
             } else { // 以宽为基准缩放
                 transWidth = destWidth;
                 transHeight = (int) (((double) destWidth / srcWidth) * srcHeight);
@@ -140,8 +137,7 @@ public class ImageUtil {
                         - halfExcessHeight * 2, image);
 
                 // 保存新图像到动态生成地址，并设置用户访问路径
-                destImagePath = saveNewImage(transImg, serverPath,
-                        Constant.IMAGE_TYPE_PNG);
+                destImagePath = saveNewImage(transImg, imageType);
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -163,8 +159,8 @@ public class ImageUtil {
      *            目标图像高度
      * @return String 最终图像存放地址
      */
-    public final static String scaleFill(InputStream srcImage,
-            String serverPath, int destWidth, int destHeight) {
+    public String scaleFill(InputStream srcImage,
+            int destWidth, int destHeight, String imageType) {
         String destImagePath = null;
         try {
             // 获取源图像长宽,定义最小缩放比率
@@ -198,8 +194,7 @@ public class ImageUtil {
             gra.dispose();
 
             // 保存新图像到动态生成地址，并设置用户访问路径
-            destImagePath = saveNewImage(img, serverPath,
-                    Constant.IMAGE_TYPE_PNG);
+            destImagePath = saveNewImage(img, imageType);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -207,23 +202,6 @@ public class ImageUtil {
         return destImagePath;
     }
 
-    /**
-     * @Title: getLength
-     * @Description: detect the length of one sentence
-     * @param text
-     * @return int --the length
-     */
-    public final static int getLength(String text) {
-        int length = 0;
-        for (int i = 0; i < text.length(); i++) {
-            if (new String(text.charAt(i) + "").getBytes().length > 1) {
-                length += 2;
-            } else {
-                length += 1;
-            }
-        }
-        return (int) Math.round(length / 2.0);
-    }
 
     /**
      * @Title: drawImage
@@ -233,7 +211,7 @@ public class ImageUtil {
      * @param image
      * @return BufferedImage
      */
-    private static BufferedImage drawPicture(int width, int height, Image image) {
+    private BufferedImage drawPicture(int width, int height, Image image) {
         // TODO Auto-generated method stub
         BufferedImage newImage = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_RGB);
@@ -249,7 +227,7 @@ public class ImageUtil {
      * @param imageType
      * @return String
      */
-    private static String generateRandomImageName(String imageType) {
+    private String generateRandomImageName(String imageSuffixType) {
         // TODO Auto-generated method stub
         /** currentTime + randomNumber */
         /*
@@ -257,8 +235,9 @@ public class ImageUtil {
          * Random(); int random = rand.nextInt(10000000); String randomImageName
          * = current + String.format("%07d", random) + "." + imageType;
          */
+    	
         String randomImageName = UUID.randomUUID().toString().replace("-", "")
-                + "." + imageType;
+                + "." + imageSuffixType;
         return randomImageName;
     }
 
@@ -272,17 +251,22 @@ public class ImageUtil {
      * @return String
      * @throws IOException
      */
-    private static String saveNewImage(BufferedImage img, String rsPath,
+    private String saveNewImage(BufferedImage img, 
             String imageType) throws IOException {
-        // TODO Auto-generated method stub
-        String imageName = generateRandomImageName(imageType);
-        if (OSUtil.isWindows()) {
-            ImageIO.write(img, imageType, new File(rsPath
-                    + Constant.IMAGE_WINDOWS_PATH + imageName));
-        } else {
-            ImageIO.write(img, imageType, new File(rsPath
-                    + Constant.IMAGE_NORMAL_PATH + imageName));
-        }
+    	String suffixType = "";
+     	if (imageType.equals("image/jpeg")) {
+     		suffixType = Constant.IMAGE_TYPE_JPG;
+ 		} else {
+ 			suffixType = Constant.IMAGE_TYPE_PNG;
+ 		}
+     	
+        String imageName = generateRandomImageName(suffixType);           
+        String classPathString = this.getClass().getClassLoader().getResource("/").getPath();  
+        String savePathString = classPathString.replaceAll("WEB-INF/classes/", Constant.IMAGE_PATH);      
+        ImageIO.write(img, suffixType, new File(savePathString + imageName)); 
+        System.out.println(savePathString + imageName);
+       // C:/Users/I079951/workspace/.metadata/.plugins/org.eclipse.wst.server.core/
+       // tmp0/wtpwebapps/ZhongheWeiHelper/WEB-INF/classes/
         return Constant.IMAGE_NORMAL_PATH + imageName;
     }
 

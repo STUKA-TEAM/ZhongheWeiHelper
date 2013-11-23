@@ -20,5 +20,6 @@
 	<import resource="song/Song-Beans.xml"/>
 	<import resource="vote/Vote-Beans.xml"/>
 	<import resource="weather/Weather-Beans.xml"/>
+	<import resource="tools/Tools-Beans.xml"/>
  
 </beans>
