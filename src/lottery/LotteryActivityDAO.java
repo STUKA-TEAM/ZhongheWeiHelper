@@ -169,10 +169,6 @@ public class LotteryActivityDAO {
 			for (int i = 0; i < iList.size(); i++) {
 				deleteChoice(iList.get(i));
 			}
-			int enableAdvice = checkEnableAdvice(lotteryId);
-			if (enableAdvice == 1) {
-				deleteAdvice(lotteryId);
-			}
 			effectedRowNum = jdbcTemplate.update(SQL, lotteryId);
 			break;
 		default:
