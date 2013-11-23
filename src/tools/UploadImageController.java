@@ -44,12 +44,10 @@ public class UploadImageController {
 					return gson.toJson(responseMessage);
 				}else {
 					ImageUtil imageUtil = new ImageUtil();
-					String relativePath = imageUtil.scaleFill(inputStream, 
-							50, 50);
-					
+					String relativePathID = imageUtil.scaleCut(inputStream, 50, 50);
 					responseMessage.setStatus(true);
 					responseMessage.setMessage("上传成功！");
-					responseMessage.setLink(relativePath);					
+					responseMessage.setLink(relativePathID);					
 					return gson.toJson(responseMessage);
 				}
 				

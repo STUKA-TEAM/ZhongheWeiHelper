@@ -32,7 +32,7 @@ public class ImageUtil {
      *            源图像输入流
      * @param scale
      *            缩放比例
-     * @return String 最终图像存放地址
+     * @return String 最终图像可访问地址（去除文件后缀和图片规格）
      */
     public String scaleRatio(InputStream srcImage, double ratio) {
         String destImagePath = null;
@@ -69,7 +69,7 @@ public class ImageUtil {
      *            目标图像高度
      * @param destWidth
      *            目标图像宽度
-     * @return String 最终图像存放地址
+     * @return String 最终图像可访问地址（去除文件后缀和图片规格）
      */
     public String scaleCut(InputStream srcImage, int destWidth, int destHeight) {
         String destImagePath = null;
@@ -150,7 +150,7 @@ public class ImageUtil {
      *            目标图像宽度
      * @param destHeight
      *            目标图像高度
-     * @return String 最终图像存放地址
+     * @return String 最终图像可访问地址（去除文件后缀和图片规格）
      */
     public String scaleFill(InputStream srcImage, int destWidth, int destHeight) {
         String destImagePath = null;
@@ -219,7 +219,7 @@ public class ImageUtil {
      * @param imageType
      * @return String
      */
-    private String generateRandomImageName() {
+    private String generateRandomImageID() {
         // TODO Auto-generated method stub
         /** currentTime + randomNumber */
         /*
@@ -228,9 +228,8 @@ public class ImageUtil {
          * = current + String.format("%07d", random) + "." + imageType;
          */
     	
-        String randomImageName = UUID.randomUUID().toString().replace("-", "")
-                + "." + Constant.IMAGE_TYPE_PNG;
-        return randomImageName;
+        String randomImageID = UUID.randomUUID().toString().replace("-", "");
+        return randomImageID;
     }
 
     /**
@@ -240,15 +239,15 @@ public class ImageUtil {
      * @param rsPath
      *            --the path of resource in server
      * @param imageType
-     * @return String
+     * @return String 最终图像可访问地址（去除文件后缀和图片规格）
      * @throws IOException
      */
     private String saveNewImage(BufferedImage img) throws IOException {
-        String imageName = generateRandomImageName();           
+        String imageID = generateRandomImageID();           
         String classPathString = this.getClass().getClassLoader().getResource("/").getPath();  
         String savePathString = classPathString.replaceAll("/WEB-INF/classes/", Constant.IMAGE_NORMAL_PATH);      
-        ImageIO.write(img, Constant.IMAGE_TYPE_PNG, new File(savePathString + imageName)); 
-        return Constant.IMAGE_NORMAL_PATH + imageName;
+        ImageIO.write(img, Constant.IMAGE_TYPE_PNG, new File(savePathString + imageID+".png")); 
+        return Constant.IMAGE_NORMAL_PATH + imageID;
     }
 
 }

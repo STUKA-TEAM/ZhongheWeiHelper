@@ -21,6 +21,10 @@ public final class Constant {
 	public static final String IMAGE_TYPE_PNG = "png";
     public static final String IMAGE_TYPE_PSD = "psd";   // photoshop
     
+    /*image size*/
+    public static final String ORIGINAL_IMAGE = "_original.png";
+    public static final String STANDARD_IMAGE = "_standard.png";
+    public static final String SMALL_IMAGE = "_small.png";
     
     /*activity status*/
     public static final int ACTIVITY_DRAFT_STATUS = 1;
