@@ -30,18 +30,19 @@ public class ImageUtil {
      * @Description: 按比例缩放图像
      * @param srcImage
      *            源图像输入流
-     * @param scale
-     *            缩放比例
+     * @param destWidth
+     *            目标图像宽度
      * @return String 最终图像存放地址
      */
-    public String scaleRatio(InputStream srcImage, double ratio) {
+    public String scaleRatio(InputStream srcImage, int destWidth) {
         String destImagePath = null;
         try {
             // 获取源图像长宽
             BufferedImage src = ImageIO.read(srcImage);
             int width = src.getWidth();
             int height = src.getHeight();
-
+            double ratio = (double)destWidth / width;
+            
             // 缩放长宽
             width = (int) (width * ratio);
             height = (int) (height * ratio);
