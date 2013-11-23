@@ -55,7 +55,7 @@ public class ImageUtil {
             BufferedImage img = drawPicture(width, height, image);
 
             // 保存新图像到动态生成地址，并设置用户访问路径
-            destImagePath = saveNewImage(img, imageType);
+            destImagePath = saveNewImage(img);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -112,7 +112,7 @@ public class ImageUtil {
                         transHeight, image);
 
                 // 保存新图像到动态生成地址，并设置用户访问路径
-                destImagePath = saveNewImage(transImg, imageType);
+                destImagePath = saveNewImage(transImg);
             } else { // 以宽为基准缩放
                 transWidth = destWidth;
                 transHeight = (int) (((double) destWidth / srcWidth) * srcHeight);
@@ -137,7 +137,7 @@ public class ImageUtil {
                         - halfExcessHeight * 2, image);
 
                 // 保存新图像到动态生成地址，并设置用户访问路径
-                destImagePath = saveNewImage(transImg, imageType);
+                destImagePath = saveNewImage(transImg);
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -194,7 +194,7 @@ public class ImageUtil {
             gra.dispose();
 
             // 保存新图像到动态生成地址，并设置用户访问路径
-            destImagePath = saveNewImage(img, imageType);
+            destImagePath = saveNewImage(img);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -227,7 +227,7 @@ public class ImageUtil {
      * @param imageType
      * @return String
      */
-    private String generateRandomImageName(String imageSuffixType) {
+    private String generateRandomImageName() {
         // TODO Auto-generated method stub
         /** currentTime + randomNumber */
         /*
@@ -237,7 +237,7 @@ public class ImageUtil {
          */
     	
         String randomImageName = UUID.randomUUID().toString().replace("-", "")
-                + "." + imageSuffixType;
+                + ".png";
         return randomImageName;
     }
 
@@ -251,22 +251,11 @@ public class ImageUtil {
      * @return String
      * @throws IOException
      */
-    private String saveNewImage(BufferedImage img, 
-            String imageType) throws IOException {
-    	String suffixType = "";
-     	if (imageType.equals("image/jpeg")) {
-     		suffixType = Constant.IMAGE_TYPE_JPG;
- 		} else {
- 			suffixType = Constant.IMAGE_TYPE_PNG;
- 		}
-     	
-        String imageName = generateRandomImageName(suffixType);           
+    private String saveNewImage(BufferedImage img) throws IOException {
+        String imageName = generateRandomImageName();           
         String classPathString = this.getClass().getClassLoader().getResource("/").getPath();  
-        String savePathString = classPathString.replaceAll("WEB-INF/classes/", Constant.IMAGE_PATH);      
-        ImageIO.write(img, suffixType, new File(savePathString + imageName)); 
-        System.out.println(savePathString + imageName);
-       // C:/Users/I079951/workspace/.metadata/.plugins/org.eclipse.wst.server.core/
-       // tmp0/wtpwebapps/ZhongheWeiHelper/WEB-INF/classes/
+        String savePathString = classPathString.replaceAll("/WEB-INF/classes/", Constant.IMAGE_NORMAL_PATH);      
+        ImageIO.write(img, "png", new File(savePathString + imageName)); 
         return Constant.IMAGE_NORMAL_PATH + imageName;
     }
 

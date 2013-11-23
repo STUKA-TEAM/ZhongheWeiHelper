@@ -26,12 +26,11 @@ public class UploadImageController {
 	@ResponseBody
 	 public String handleFormUpload(
         @RequestParam("file") MultipartFile fileFromForm) {
-		ResponseMessage responseMessage = new ResponseMessage();
+		UploadImageResponseMessage responseMessage = new UploadImageResponseMessage();
 		  Gson gson = new Gson();
 		  if (!fileFromForm.isEmpty()) {
               try {
-				InputStream inputStream = fileFromForm.getInputStream();
-				String fileName = fileFromForm.getOriginalFilename();			
+				InputStream inputStream = fileFromForm.getInputStream();		
 				CommonValidationTools commonValidationTools = new CommonValidationTools();
 	
 				if (!commonValidationTools.checkImageSize(fileFromForm)) {
@@ -50,8 +49,7 @@ public class UploadImageController {
 					
 					responseMessage.setStatus(true);
 					responseMessage.setMessage("上传成功！");
-					responseMessage.setDataString(relativePath);
-					
+					responseMessage.setLink(relativePath);					
 					return gson.toJson(responseMessage);
 				}
 				
