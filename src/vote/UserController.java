@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,20 +32,19 @@ public class UserController {
 	 * @Description: 获取正在发布的活动信息列表
 	 * @return
 	 */
-	@RequestMapping(value = "/activity_releasing", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/active_activitylist", method = RequestMethod.GET)
 	@ResponseBody
-	public String getReleasingActivity(){
+	public String getReleasingActivity(Model model){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
-		List<VoteActivity> vList = vActivityDAO.getActivityListByStatus(Constant.ACTIVITY_RELEASE_STATUS);
 		
-		Gson gson = new Gson();
-		String json = gson.toJson(vList); 
+		List<VoteActivity> vList = vActivityDAO.getActivityListByStatus(Constant.ACTIVITY_RELEASE_STATUS);
+		model.addAttribute("activelist", vList);
 		
 		((ConfigurableApplicationContext)context).close();
 		
-		return json;
+		return "showActiveList";
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class UserController {
 	 * @param json
 	 * @return
 	 */
-	@RequestMapping(value = "/submit_choice", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/submit_choice", method = RequestMethod.POST)
 	public String submitChoice(@RequestBody String json){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -67,7 +67,7 @@ public class UserController {
 		return choiceId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/submit_choices", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/submit_choices", method = RequestMethod.POST)
 	public String submitChoices(@RequestBody String json){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -92,9 +92,9 @@ public class UserController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/result1", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/activityresult", method = RequestMethod.GET)
 	@ResponseBody
-	public String showUserResult(@RequestParam(value = "voteId", required = true) int voteId){
+	public String showUserResult(@RequestParam(value = "voteId", required = true) int voteId, Model model){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteItemDAO vItemDAO = (VoteItemDAO) context.getBean("VoteItemDAO");
@@ -110,12 +110,11 @@ public class UserController {
 			iList.add(iResult);
 		}
 		
-	     Gson gson = new Gson();
-	     String json = gson.toJson(iList);
+		model.addAttribute("activityresult", iList);
 	     
 	     ((ConfigurableApplicationContext)context).close();
 	     
-	     return json;
+	     return "showUserResult";
 	}
 	
 	/**
@@ -123,7 +122,7 @@ public class UserController {
 	 * @param json
 	 * @return
 	 */
-	@RequestMapping(value = "/submit_advice", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/submit_advice", method = RequestMethod.POST)
 	public String submitAdvice(@RequestBody String json){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");

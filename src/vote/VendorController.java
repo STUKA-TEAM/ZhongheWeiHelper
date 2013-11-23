@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,29 +32,55 @@ public class VendorController {
 	 * @Description: 获取所有活动信息列表
 	 * @return
 	 */
-	@RequestMapping(value = "/activitylist", method = RequestMethod.GET)
-	@ResponseBody
-	public String getVoteActivityList(){
+	@RequestMapping(value = "/store/activitylist", method = RequestMethod.GET)
+	public String getVoteActivityList(Model model){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
-		List<VoteActivity> vList = vActivityDAO.getActivityList();
 		
-		Gson gson = new Gson();
-		String json = gson.toJson(vList); 
+		List<VoteActivity> vList = vActivityDAO.getActivityList();		
+		model.addAttribute("activitylist", vList);
 		
 		((ConfigurableApplicationContext)context).close();
 		
-		return json;
+		return "showActivityList";
 	}
 	
 	/**
-	 * @Description: 0-新建 1-更新 
-	 * 3种操作 草稿+保存+发布
+	 * @Description: 创建新的活动
+	 * @return
+	 */
+	@RequestMapping(value = "/store/newactivity/create", method = RequestMethod.GET)
+	public String createNewActivity(){
+		return "createActivity";
+	}
+	
+	/**
+	 * @Description: 再次利用已结束活动
+	 * @param voteId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/store/newactivity/reuse", method = RequestMethod.GET)
+	public String reuseActivity(@RequestParam(value = "voteId", required = true) int voteId, Model model){
+		ApplicationContext context = 
+				new ClassPathXmlApplicationContext("All-Modules.xml");
+		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
+		
+		VoteActivity vActivity = vActivityDAO.getActivity(voteId);
+		model.addAttribute("activity", vActivity);
+		
+		((ConfigurableApplicationContext)context).close();
+		
+		return "reuseActivity";
+	}
+	
+	/**
+	 * @Description: 3种操作 草稿+保存+发布  后两种需要添加后台验证
 	 * @param json
 	 * @return
 	 */
-	@RequestMapping(value = "/draft0", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/draft_activity/create", method = RequestMethod.POST)
 	public String draftNewActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -70,7 +97,7 @@ public class VendorController {
 		return voteId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/draft1", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/draft_activity/update", method = RequestMethod.POST)
 	public String draftExistActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -87,7 +114,7 @@ public class VendorController {
 		return result > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/save0", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/save_activity/create", method = RequestMethod.POST)
 	public String saveNewActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -104,7 +131,7 @@ public class VendorController {
 		return voteId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/save1", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/save_activity/update", method = RequestMethod.POST)
 	public String saveExistActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -121,7 +148,7 @@ public class VendorController {
 		return result > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/release0", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/release_activity/create", method = RequestMethod.POST)
 	public String releaseNewActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -138,7 +165,7 @@ public class VendorController {
 		return voteId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/release1", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/release_activity/update", method = RequestMethod.POST)
 	public String releaseExistActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -160,7 +187,7 @@ public class VendorController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/delete",  method = RequestMethod.POST)
+	@RequestMapping(value = "/store/delete_activity",  method = RequestMethod.POST)
 	public String deleteActivity(@RequestBody int voteId){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -178,7 +205,7 @@ public class VendorController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/close", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/close_activity", method = RequestMethod.POST)
 	public String closeActivity(@RequestBody int voteId){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -197,7 +224,7 @@ public class VendorController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/release", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/release_activity", method = RequestMethod.POST)
 	public String releaseActivity(@RequestBody int voteId){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -216,9 +243,9 @@ public class VendorController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/result0", method = RequestMethod.GET)
+	@RequestMapping(value = "/store/activityresult", method = RequestMethod.GET)
 	@ResponseBody
-	public String showVendorResult(@RequestParam(value = "voteId", required = true) int voteId){
+	public String showVendorResult(@RequestParam(value = "voteId", required = true) int voteId, Model model){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
@@ -247,12 +274,11 @@ public class VendorController {
 		vResult.setItemResult(iList);
 		vResult.setAdviceList(aList);
 		
-		 Gson gson = new Gson();
-	     String json = gson.toJson(vResult);
+		model.addAttribute("activityresult", vResult);
 	     
 	     ((ConfigurableApplicationContext)context).close();
 	     
-	     return json;
+	     return "showStoreResult";
 	}
 	
 }
