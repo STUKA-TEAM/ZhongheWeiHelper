@@ -1,9 +1,7 @@
 package tools;
-
 public class ResponseMessage {
 private boolean status;
 private String message;
-private String dataString;
 public boolean isStatus() {
 	return status;
 }
@@ -15,12 +13,6 @@ public String getMessage() {
 }
 public void setMessage(String message) {
 	this.message = message;
-}
-public String getDataString() {
-	return dataString;
-}
-public void setDataString(String dataString) {
-	this.dataString = dataString;
 }
 
 }
