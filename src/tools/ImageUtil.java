@@ -30,14 +30,11 @@ public class ImageUtil {
      * @Description: 按比例缩放图像
      * @param srcImage
      *            源图像输入流
-     * @param serverPath
-     *            服务器上资源路径
      * @param scale
      *            缩放比例
      * @return String 最终图像存放地址
      */
-    public String scaleRatio(InputStream srcImage,
-            double ratio, String imageType) {
+    public String scaleRatio(InputStream srcImage, double ratio) {
         String destImagePath = null;
         try {
             // 获取源图像长宽
@@ -68,15 +65,13 @@ public class ImageUtil {
      * @Description: 按宽高缩放图像(裁剪法)
      * @param srcImage
      *            源图像输入流
-     * @param serverPath
-     *            服务器上资源路径
      * @param destHeight
      *            目标图像高度
      * @param destWidth
      *            目标图像宽度
      * @return String 最终图像存放地址
      */
-    public String scaleCut(InputStream srcImage, int destWidth, int destHeight,String imageType) {
+    public String scaleCut(InputStream srcImage, int destWidth, int destHeight) {
         String destImagePath = null;
         try {
             // 获取源图像长宽
@@ -151,16 +146,13 @@ public class ImageUtil {
      * @Description: 按宽高缩放图像(填补空白法)
      * @param srcImage
      *            源图像输入流
-     * @param serverPath
-     *            服务器上资源路径
      * @param destWidth
      *            目标图像宽度
      * @param destHeight
      *            目标图像高度
      * @return String 最终图像存放地址
      */
-    public String scaleFill(InputStream srcImage,
-            int destWidth, int destHeight, String imageType) {
+    public String scaleFill(InputStream srcImage, int destWidth, int destHeight) {
         String destImagePath = null;
         try {
             // 获取源图像长宽,定义最小缩放比率
@@ -237,7 +229,7 @@ public class ImageUtil {
          */
     	
         String randomImageName = UUID.randomUUID().toString().replace("-", "")
-                + ".png";
+                + "." + Constant.IMAGE_TYPE_PNG;
         return randomImageName;
     }
 
@@ -255,7 +247,7 @@ public class ImageUtil {
         String imageName = generateRandomImageName();           
         String classPathString = this.getClass().getClassLoader().getResource("/").getPath();  
         String savePathString = classPathString.replaceAll("/WEB-INF/classes/", Constant.IMAGE_NORMAL_PATH);      
-        ImageIO.write(img, "png", new File(savePathString + imageName)); 
+        ImageIO.write(img, Constant.IMAGE_TYPE_PNG, new File(savePathString + imageName)); 
         return Constant.IMAGE_NORMAL_PATH + imageName;
     }
 

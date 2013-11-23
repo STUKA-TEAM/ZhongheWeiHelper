@@ -45,7 +45,7 @@ public class UploadImageController {
 				}else {
 					ImageUtil imageUtil = new ImageUtil();
 					String relativePath = imageUtil.scaleFill(inputStream, 
-							50, 50, fileFromForm.getContentType());
+							50, 50);
 					
 					responseMessage.setStatus(true);
 					responseMessage.setMessage("上传成功！");
