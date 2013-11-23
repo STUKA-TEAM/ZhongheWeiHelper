@@ -21,9 +21,6 @@ public final class Constant {
 	public static final String IMAGE_TYPE_PNG = "png";
     public static final String IMAGE_TYPE_PSD = "psd";   // photoshop
     
-    /*image server path*/
-    public static final String IMAGE_PATH = "userimages/";
-    
     
     /*activity status*/
     public static final int ACTIVITY_DRAFT_STATUS = 1;
