@@ -19,7 +19,7 @@ import com.google.gson.Gson;
  */
 public class UserManager {
 
-    private ApplicationContext mContext;
+    private static ApplicationContext mContext;
 
     public UserManager() {
         mContext = new ClassPathXmlApplicationContext("All-Modules.xml");
