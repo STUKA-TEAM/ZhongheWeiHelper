@@ -1,17 +1,14 @@
 package tools;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
@@ -21,30 +18,60 @@ import javax.imageio.ImageIO;
  * @Title: ImageUtil
  * @Description: Provide frequently used functions in image processing
  * @Company: ZhongHe
- * @author ben
+ * @author ben, BelieveIt
  * @date 2013年11月7日
  */
 public class ImageUtil {
-    /**
-     * @Title: scaleRatio
-     * @Description: 按比例缩放图像
-     * @param srcImage
-     *            源图像输入流
-     * @param serverPath
-     *            服务器上资源路径
-     * @param scale
-     *            缩放比例
-     * @return String 最终图像存放地址
-     */
-    public final static String scaleRatio(InputStream srcImage,
-            String serverPath, double ratio) {
-        String destImagePath = null;
+/**
+ * 
+ * @param input
+ *        图片输入流
+ * @return 返回存入数据库的图片路径（除去规格和后缀），使用时利用GetSpecificImage类可以构造相应规格的图片可访问路径
+ */
+	public String saveMutiSize(InputStream input){
+		try{
+			String imageID = generateRandomImageID();
+			String saveInDataBase =  Constant.IMAGE_NORMAL_PATH + imageID;
+			
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			org.apache.commons.io.IOUtils.copy(input, baos);
+			byte[] bytes = baos.toByteArray();
+			Boolean saveOrigin = scaleRatio(new ByteArrayInputStream(bytes), Constant.ORIGINAL_IMAGE_WIDTH, 
+					imageID, Constant.ORIGINAL_IMAGE); 
+			
+			Boolean saveStandard = scaleCut(new ByteArrayInputStream(bytes), Constant.STANDARD_IMAGE_WIDTH, 
+					Constant.STANDARD_IMAGE_HEIGHT, imageID, Constant.STANDARD_IMAGE);
+			
+			Boolean saveSmall = scaleCut(new ByteArrayInputStream(bytes), Constant.SAMLL_IMAGE_WIDTH, 
+					Constant.SAMLL_IMAGE_WIDTH, imageID, Constant.SMALL_IMAGE);
+			
+			if (saveOrigin && saveStandard && saveSmall) {
+				return saveInDataBase;
+			} else {
+				return "";
+			}
+		}catch(Exception e){
+			return "";
+		}
+		
+	}
+	 
+/**
+ * 
+ * @param srcImage 图片输入流
+ * @param destWidth 定宽
+ * @param imageID 图片ID
+ * @param sizeType 	图片存储规格			
+ * @return
+ */
+    private Boolean scaleRatio(InputStream srcImage, int destWidth, String imageID, String sizeType) {
         try {
             // 获取源图像长宽
             BufferedImage src = ImageIO.read(srcImage);
             int width = src.getWidth();
             int height = src.getHeight();
-
+            double ratio = (double)destWidth / width;
+            
             // 缩放长宽
             width = (int) (width * ratio);
             height = (int) (height * ratio);
@@ -54,32 +81,25 @@ public class ImageUtil {
                     Image.SCALE_DEFAULT);
             BufferedImage img = drawPicture(width, height, image);
 
-            // 保存新图像到动态生成地址，并设置用户访问路径
-            destImagePath = saveNewImage(img, serverPath,
-                    Constant.IMAGE_TYPE_PNG);
+            return saveNewImage(img, imageID, sizeType);
         } catch (Exception e) {
             // TODO: handle exception
-            e.printStackTrace();
+        	e.printStackTrace();
+        	return false;
         }
-        return destImagePath;
     }
 
-    /**
-     * @Title: scaleCut
-     * @Description: 按宽高缩放图像(裁剪法)
-     * @param srcImage
-     *            源图像输入流
-     * @param serverPath
-     *            服务器上资源路径
-     * @param destHeight
-     *            目标图像高度
-     * @param destWidth
-     *            目标图像宽度
-     * @return String 最终图像存放地址
-     */
-    public final static String scaleCut(InputStream srcImage,
-            String serverPath, int destWidth, int destHeight) {
-        String destImagePath = null;
+/**
+ * 
+ * @param srcImage 图片输入流
+ * @param destWidth 定宽
+ * @param destHeight 定高
+ * @param imageID 图片ID
+ * @param sizeType 图片存储规格
+ * @return
+ */
+    private Boolean scaleCut(InputStream srcImage, int destWidth, int destHeight,
+    		 String imageID, String sizeType) {
         try {
             // 获取源图像长宽
             BufferedImage src = ImageIO.read(srcImage);
@@ -113,9 +133,7 @@ public class ImageUtil {
                 transImg = drawPicture(transWidth - halfExcessWidth * 2,
                         transHeight, image);
 
-                // 保存新图像到动态生成地址，并设置用户访问路径
-                destImagePath = saveNewImage(transImg, serverPath,
-                        Constant.IMAGE_TYPE_PNG);
+                return saveNewImage(transImg, imageID, sizeType);
             } else { // 以宽为基准缩放
                 transWidth = destWidth;
                 transHeight = (int) (((double) destWidth / srcWidth) * srcHeight);
@@ -139,90 +157,12 @@ public class ImageUtil {
                 transImg = drawPicture(transWidth, transHeight
                         - halfExcessHeight * 2, image);
 
-                // 保存新图像到动态生成地址，并设置用户访问路径
-                destImagePath = saveNewImage(transImg, serverPath,
-                        Constant.IMAGE_TYPE_PNG);
+                return saveNewImage(transImg, imageID, sizeType);
             }
         } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
+        	e.printStackTrace();
+            return false;
         }
-        return destImagePath;
-    }
-
-    /**
-     * @Title: scaleFill
-     * @Description: 按宽高缩放图像(填补空白法)
-     * @param srcImage
-     *            源图像输入流
-     * @param serverPath
-     *            服务器上资源路径
-     * @param destWidth
-     *            目标图像宽度
-     * @param destHeight
-     *            目标图像高度
-     * @return String 最终图像存放地址
-     */
-    public final static String scaleFill(InputStream srcImage,
-            String serverPath, int destWidth, int destHeight) {
-        String destImagePath = null;
-        try {
-            // 获取源图像长宽,定义最小缩放比率
-            BufferedImage src = ImageIO.read(srcImage);
-            int srcWidth = src.getWidth();
-            int srcHeight = src.getHeight();
-            double ratio = (double) destWidth / srcWidth < (double) destHeight
-                    / srcHeight ? ((double) destWidth / srcWidth)
-                    : ((double) destHeight / srcHeight);
-
-            // 线性缩放加补白
-            Image image = src.getScaledInstance(destWidth, destHeight,
-                    Image.SCALE_DEFAULT);
-            AffineTransformOp op = new AffineTransformOp(
-                    AffineTransform.getScaleInstance(ratio, ratio), null);
-            image = op.filter(src, null);
-            BufferedImage img = new BufferedImage(destWidth, destHeight,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D gra = img.createGraphics();
-            img = gra.getDeviceConfiguration().createCompatibleImage(destWidth,
-                    destHeight, Transparency.TRANSLUCENT);
-            gra.dispose();
-            gra = img.createGraphics();
-            if (destWidth == image.getWidth(null))
-                gra.drawImage(image, 0,
-                        (destHeight - image.getHeight(null)) / 2,
-                        image.getWidth(null), image.getHeight(null), null);
-            else
-                gra.drawImage(image, (destWidth - image.getWidth(null)) / 2, 0,
-                        image.getWidth(null), image.getHeight(null), null);
-            gra.dispose();
-
-            // 保存新图像到动态生成地址，并设置用户访问路径
-            destImagePath = saveNewImage(img, serverPath,
-                    Constant.IMAGE_TYPE_PNG);
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-        return destImagePath;
-    }
-
-    /**
-     * @Title: getLength
-     * @Description: detect the length of one sentence
-     * @param text
-     * @return int --the length
-     */
-    public final static int getLength(String text) {
-        int length = 0;
-        for (int i = 0; i < text.length(); i++) {
-            if (new String(text.charAt(i) + "").getBytes().length > 1) {
-                length += 2;
-            } else {
-                length += 1;
-            }
-        }
-        return (int) Math.round(length / 2.0);
     }
 
     /**
@@ -233,7 +173,7 @@ public class ImageUtil {
      * @param image
      * @return BufferedImage
      */
-    private static BufferedImage drawPicture(int width, int height, Image image) {
+    private BufferedImage drawPicture(int width, int height, Image image) {
         // TODO Auto-generated method stub
         BufferedImage newImage = new BufferedImage(width, height,
                 BufferedImage.TYPE_INT_RGB);
@@ -244,12 +184,10 @@ public class ImageUtil {
     }
 
     /**
-     * @Title: generateRandomImageName
-     * @Description: generate image name randomly
-     * @param imageType
-     * @return String
+     * 
+     * @return 返回图片ID
      */
-    private static String generateRandomImageName(String imageType) {
+    private String generateRandomImageID() {
         // TODO Auto-generated method stub
         /** currentTime + randomNumber */
         /*
@@ -257,33 +195,31 @@ public class ImageUtil {
          * Random(); int random = rand.nextInt(10000000); String randomImageName
          * = current + String.format("%07d", random) + "." + imageType;
          */
-        String randomImageName = UUID.randomUUID().toString().replace("-", "")
-                + "." + imageType;
-        return randomImageName;
+    	
+        String randomImageID = UUID.randomUUID().toString().replace("-", "");
+        return randomImageID;
     }
-
-    /**
-     * @Title: saveNewImage
-     * @Description: save processed image and return its access path
-     * @param img
-     * @param rsPath
-     *            --the path of resource in server
-     * @param imageType
-     * @return String
-     * @throws IOException
-     */
-    private static String saveNewImage(BufferedImage img, String rsPath,
-            String imageType) throws IOException {
-        // TODO Auto-generated method stub
-        String imageName = generateRandomImageName(imageType);
-        if (OSUtil.isWindows()) {
-            ImageIO.write(img, imageType, new File(rsPath
-                    + Constant.IMAGE_WINDOWS_PATH + imageName));
-        } else {
-            ImageIO.write(img, imageType, new File(rsPath
-                    + Constant.IMAGE_NORMAL_PATH + imageName));
-        }
-        return Constant.IMAGE_NORMAL_PATH + imageName;
+    
+/**
+ * 
+ * @param img 图片输入流
+ * @param imageID 图片ID
+ * @param size 图片规格
+ * @return
+ */
+    private Boolean saveNewImage(BufferedImage img, String imageID, String sizeType){
+    	try {
+	    		String classPathString = this.getClass().getClassLoader().getResource("/").getPath();  
+	            String savePathString = classPathString.replaceAll("/WEB-INF/classes/", Constant.IMAGE_NORMAL_PATH);           
+	            ImageIO.write(img, Constant.IMAGE_TYPE_PNG, new File(savePathString + 
+	            		imageID + sizeType)); 
+	            return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+        
     }
+    
 
 }

@@ -10,21 +10,5 @@
    <!-- <bean id="OrderDishDAO" class="TestJDBCTemplate.OrderDishDAO"> -->
       <!-- <property name="dataSource"  ref="dataSource" /> -->    
    <!-- </bean> -->
-   
-   <bean id="LotteryActivityDAO" class="lottery.LotteryActivityDAO">
-     <property name="dataSource" ref="dataSource"/>
-   </bean>
-   
-   <bean id="LotteryPrizeDAO" class="lottery.LotteryPrizeDAO">
-     <property name="dataSource" ref="dataSource"/>
-   </bean>
-   
-   <bean id="LotteryRecordDAO" class="lottery.LotteryRecordDAO">
-     <property name="dataSource" ref="dataSource"/>
-   </bean>
-   
-   <bean id="LuckyRecordDAO" class="lottery.LuckyRecordDAO">
-     <property name="dataSource" ref="dataSource"/>
-   </bean>   
       
 </beans>

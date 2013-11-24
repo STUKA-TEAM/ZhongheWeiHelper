@@ -58,11 +58,29 @@ public class CommonValidationTools {
 	 * @return 是否是图片格式
 	 */
 	public boolean checkImageType(MultipartFile multipartFile) {
-		if (multipartFile.getContentType() != "image/jpeg" 
-				&& multipartFile.getContentType() != "image/png") {
-			return false;
-		}else {
+		if (multipartFile.getContentType().equals("image/jpeg")  
+				|| multipartFile.getContentType().equals("image/png")) {
 			return true;
+		}else {
+			return false;
 		}
 	}
+	
+	/**
+     * @Title: getLength
+     * @Description: detect the length of one sentence
+     * @param text
+     * @return int --the length
+     */
+    public int getLength(String text) {
+        int length = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (new String(text.charAt(i) + "").getBytes().length > 1) {
+                length += 2;
+            } else {
+                length += 1;
+            }
+        }
+        return (int) Math.round(length / 2.0);
+    }
 }
