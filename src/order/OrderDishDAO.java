@@ -108,6 +108,19 @@ public class OrderDishDAO {
         return orderDish;
     }
 
+    // Query
+    /**
+     * 
+     * @param name
+     * @return the OrderDish object
+     */
+    public List<OrderDish> getOrderDishByDate(int date) {
+        String SQL = "select * from order_dishes where Date = ?";
+        List<OrderDish> orderDish = jdbcTemplate.query(SQL,
+                new Object[] { date }, new OrderDishMapper());
+        return orderDish;
+    }
+
     /**
      * 
      * @return the list of OrderDish object

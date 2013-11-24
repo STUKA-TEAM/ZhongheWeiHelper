@@ -47,20 +47,25 @@ public class StoreManager {
         orderDishDAO.deleteById(id);
     }
 
-    public String getDishes() {
+    public List<OrderDish> getDishes() {
         OrderDishDAO orderDishDAO = (OrderDishDAO) mContext
                 .getBean("OrderDishDAO");
         List<OrderDish> orderDishes = orderDishDAO.getOrderDishList();
-        Gson gson = new Gson();
-        return gson.toJson(orderDishes);
+        return orderDishes;
+    }
+    
+    public List<OrderDish> getDishesByDate(int date){
+        OrderDishDAO orderDishDAO = (OrderDishDAO) mContext
+                .getBean("OrderDishDAO");
+        List<OrderDish> orderDishes = orderDishDAO.getOrderDishByDate(date);
+        return orderDishes;
     }
 
-    public String getMenu() {
+    public List<OrderMenu> getMenu() {
         OrderMenuDAO orderMenuDAO = (OrderMenuDAO) mContext
                 .getBean("OrderMenuDAO");
         List<OrderMenu> orderMenus = orderMenuDAO.getOrderMenuList();
-        Gson gson = new Gson();
-        return gson.toJson(orderMenus);
+        return orderMenus;
     }
 
     public void addMenu(int date, List<String> dishNames) {
@@ -82,21 +87,24 @@ public class StoreManager {
     public void setMenu(OrderMenu orderMenu) {
         OrderMenuDAO orderMenuDAO = (OrderMenuDAO) mContext
                 .getBean("OrderMenuDAO");
+        OrderMenu orgMenu = orderMenuDAO
+                .getOrderMenuByDate(orderMenu.getDate());
+        String dishId = orderMenu.getDish();
+        orderMenu.setDish(orgMenu.getDish() + dishId);
         orderMenuDAO.updateByDate(orderMenu);
     }
 
-    public void setOrder(OrderUserOrder userOrder) {
+    public void setOrder(int id, int state) {
         OrderUserOrderDAO userOrderDAO = (OrderUserOrderDAO) mContext
                 .getBean("OrderUserOrderDAO");
-        userOrderDAO.updateById(userOrder);
+        userOrderDAO.updateState(id, state);
     }
 
-    public String getOrders() {
+    public List<OrderUserOrder> getOrders() {
         OrderUserOrderDAO userOrderDAO = (OrderUserOrderDAO) mContext
                 .getBean("OrderUserOrderDAO");
         List<OrderUserOrder> userOrders = userOrderDAO.getOrderUserOrderList();
-        Gson gson = new Gson();
-        return gson.toJson(userOrders);
+        return userOrders;
     }
 
     public void addOrderWiki(String wiki) {

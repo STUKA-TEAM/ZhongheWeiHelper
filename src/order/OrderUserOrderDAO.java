@@ -86,13 +86,22 @@ public class OrderUserOrderDAO {
      * @return
      */
     public int updateById(OrderUserOrder userOrder) {
-        String SQL = "update order_user_order set UserId = ?, Date = ?, DishId = ?, DishNum = ?, Price = ?, State = ? where OrderId = ?";
+        String SQL = "update order_user_order set UserId = ?, Date = ?,"
+                + " DishId = ?, DishNum = ?, Price = ?, State = ?"
+                + " where OrderId = ?";
         int effectedRowNum = jdbcTemplate.update(
                 SQL,
                 new Object[] { userOrder.getUserId(), userOrder.getDate(),
                         userOrder.getDishId(), userOrder.getDishNum(),
                         userOrder.getPrice(), userOrder.getState(),
                         userOrder.getOrderId() });
+        return effectedRowNum;
+    }
+
+    public int updateState(int id, int state) {
+        String SQL = "update order_user_order set State = ? where OrderId = ?";
+        int effectedRowNum = jdbcTemplate.update(SQL,
+                new Object[] { state, id });
         return effectedRowNum;
     }
 
