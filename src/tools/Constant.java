@@ -31,7 +31,7 @@ public final class Constant {
     public static final int STANDARD_IMAGE_HEIGHT = 200;
     //缩略图，形状为正方形，边长为50px;
     public static final String SMALL_IMAGE = "_small.jpg";
-    public static final int SAMLL_IMAGE_WIDTH = 50;
+    public static final int SAMLL_IMAGE_WIDTH = 65;
     
     /*activity status*/
     public static final int ACTIVITY_DRAFT_STATUS = 1;
