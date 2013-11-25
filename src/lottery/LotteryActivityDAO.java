@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -67,9 +69,18 @@ public class LotteryActivityDAO {
 		
 		if (result > 0) {    //insert items
 			int lotteryId = kHolder.getKey().intValue();
+			List<LotteryPrize> pList = lActivity.getLpList();
 			
-			for (int i = 0; i < lActivity.getLpList().size(); i++) {
-				LotteryPrize lPrize = lActivity.getLpList().get(i);
+			/**按中奖率由小到大排序*/
+			Collections.sort(pList, new Comparator<LotteryPrize>() {
+				@Override
+				public int compare(LotteryPrize o1, LotteryPrize o2) {
+					return o1.getLuckyPercent().compareTo(o2.getLuckyPercent());
+				}
+			});
+			
+			for (int i = 0; i < pList.size(); i++) {
+				LotteryPrize lPrize = pList.get(i);
 				insertPrize(lPrize, lotteryId);			
 			}
 		}
@@ -95,8 +106,18 @@ public class LotteryActivityDAO {
 		if (effectedRowNum > 0) {  //delete old items and insert new items
 			deletePrize(lActivity.getLotteryId());
 			
-			for (int i = 0; i < lActivity.getLpList().size(); i++) {
-				LotteryPrize lPrize = lActivity.getLpList().get(i);
+			List<LotteryPrize> pList = lActivity.getLpList();
+			
+			/**按中奖率由小到大排序*/
+			Collections.sort(pList, new Comparator<LotteryPrize>() {
+				@Override
+				public int compare(LotteryPrize o1, LotteryPrize o2) {
+					return o1.getLuckyPercent().compareTo(o2.getLuckyPercent());
+				}
+			});
+			
+			for (int i = 0; i < pList.size(); i++) {
+				LotteryPrize lPrize = pList.get(i);
 				insertPrize(lPrize, lActivity.getLotteryId());			
 			}
 		}
@@ -148,7 +169,7 @@ public class LotteryActivityDAO {
 	/**
 	 * @Title: deleteByLotteryId
 	 * @Description: 根据活动Id删除活动记录以及与之相关的一切信息记录;
-	 * 间接记录的删除
+	 * 间接记录的删除只关注执行与否，不统计影响行数
 	 * @param lotteryId
 	 * @return
 	 */
@@ -156,7 +177,7 @@ public class LotteryActivityDAO {
 		String SQL = "DELETE FROM lottery_activity WHERE LotteryId = ?";
 		int effectedRowNum = 0;
 		
-		int lotteryStatus = checkLotteryStatus(lotteryId);
+		int lotteryStatus = getLotteryStatus(lotteryId);
 		switch (lotteryStatus) {
 		case Constant.ACTIVITY_DRAFT_STATUS:
 		case Constant.ACTIVITY_SAVE_STATUS:
@@ -164,11 +185,12 @@ public class LotteryActivityDAO {
 			effectedRowNum = jdbcTemplate.update(SQL, lotteryId);
 			break;
 		case Constant.ACTIVITY_CLOSED_STATUS:
-			List<Integer> iList = getPrizeIdList(lotteryId);
-			deletePrize(lotteryId);
+			List<Integer> iList = getPrizeIdList(lotteryId);			
 			for (int i = 0; i < iList.size(); i++) {
-				deleteChoice(iList.get(i));
+				deleteLuckyRecord(iList.get(i));
 			}
+			deleteLotteryRecord(lotteryId);
+			deletePrize(lotteryId);
 			effectedRowNum = jdbcTemplate.update(SQL, lotteryId);
 			break;
 		default:
@@ -249,12 +271,12 @@ public class LotteryActivityDAO {
 	}
 	
 	/**
-	 * @Title: checkLotteryStatus
+	 * @Title: getLotteryStatus
 	 * @Description: 根据活动Id返回活动当前状态
 	 * @param lotteryId
 	 * @return
 	 */
-	public int checkLotteryStatus(int lotteryId){
+	public int getLotteryStatus(int lotteryId){
 		String SQL = "SELECT LotteryStatus FROM lottery_activity WHERE LotteryId = ?";
 		int lotteryStatus = jdbcTemplate.queryForObject(SQL, new Object[]{lotteryId}, new LotteryStatusMapper());
 		return lotteryStatus;
@@ -268,15 +290,35 @@ public class LotteryActivityDAO {
 		}	
 	}
 	
+	/**
+	 * @Title: getChanceNum
+	 * @Description: 根据活动Id返回活动最大抽奖次数
+	 * @param lotteryId
+	 * @return
+	 */
+	public int getChanceNum(int lotteryId){
+		String SQL = "SELECT ChanceNum FROM lottery_activity WHERE LotteryId = ?";
+		int chanceNum = jdbcTemplate.queryForObject(SQL, new Object[]{lotteryId}, new ChanceNumMapper());
+		return chanceNum;
+	}
+	
+	private static final class ChanceNumMapper implements RowMapper<Integer> {
+		@Override
+		public Integer mapRow(ResultSet rs, int arg1) throws SQLException {
+			Integer chanceNum = rs.getInt("ChanceNum");
+			return chanceNum;
+		}		
+	}
+	
 	//private methods dealing with other models
 	/**
 	 * LotteryPrize Model
 	 */
 	private int insertPrize(LotteryPrize lPrize, int lotteryId){
 		String SQL = "INSERT INTO lottery_prize(LotteryId, PrizeName, PrizeContent, LuckyNum, LuckyPercent) VALUES (?, ?, ?, ?, ?)";
-		int effectedRowNum = jdbcTemplate.update(SQL, lotteryId, lPrize.getPrizeName(),
+		int prizeId = jdbcTemplate.update(SQL, lotteryId, lPrize.getPrizeName(),
 				lPrize.getPrizeContent(), lPrize.getLuckyNum(), lPrize.getLuckyPercent());
-		return effectedRowNum;
+		return prizeId;
 	}
 	
 	private int deletePrize(int lotteryId){
@@ -300,7 +342,7 @@ public class LotteryActivityDAO {
 			lPrize.setPrizeName(rs.getString("PrizeName"));
 			lPrize.setPrizeContent(rs.getString("PrizeContent"));
 			lPrize.setLuckyNum(rs.getInt("LuckyNum"));
-			lPrize.setLuckyPercent(rs.getDouble("LuckyPercent"));
+			lPrize.setLuckyPercent(rs.getBigDecimal("LuckyPercent"));
 			return lPrize;
 		}		
 	}
@@ -320,20 +362,20 @@ public class LotteryActivityDAO {
 	}
 	
 	/**
-	 * Choice Model
+	 * LotteryRecord Model
 	 */
-	private int deleteChoice(int itemId){
-		String SQL = "DELETE FROM vote_item_choice WHERE ItemId = ?";
-		int effectedRowNum = jdbcTemplate.update(SQL, itemId);
+	private int deleteLotteryRecord(int lotteryId){
+		String SQL = "DELETE FROM lottery_record WHERE LotteryId = ?";
+		int effectedRowNum = jdbcTemplate.update(SQL, lotteryId);
 		return effectedRowNum;
 	}
 	
 	/**
-	 * Advice Model
+	 * LuckyRecord Model
 	 */
-	private int deleteAdvice(int voteId){
-		String SQL = "DELETE FROM vote_advice WHERE VoteId = ?";
-		int effectedRowNum = jdbcTemplate.update(SQL, voteId);
+	private int deleteLuckyRecord(int prizeId){
+		String SQL = "DELETE FROM lottery_lucky_record WHERE PrizeId = ?";
+		int effectedRowNum = jdbcTemplate.update(SQL, prizeId);
 		return effectedRowNum;
 	}
 }

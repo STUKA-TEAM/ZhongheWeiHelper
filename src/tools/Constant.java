@@ -28,6 +28,14 @@ public final class Constant {
     public static final int ACTIVITY_RELEASE_STATUS = 3;
     public static final int ACTIVITY_CLOSED_STATUS = 4;
     
+    /*prize status*/
+    public static final int PRIZE_ON = 1;
+    public static final int PRIZE_OFF = 0;
+    
+    /*lottery status*/
+    public static final int WITH_PRIZE = 1;
+    public static final int WITHOUT_PRIZE = 0;
+    
     /*random generator*/
     public static final String ALL_CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     

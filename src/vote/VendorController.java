@@ -76,11 +76,12 @@ public class VendorController {
 	}
 	
 	/**
-	 * @Description: 3种操作 草稿+保存+发布  后两种需要添加后台验证
+	 * @Description: 3种操作 草稿+保存+发布  后两种需要后台验证
 	 * @param json
 	 * @return
 	 */
-	@RequestMapping(value = "/store/draft_activity/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/draft/activity/create", method = RequestMethod.POST)
+	@ResponseBody
 	public String draftNewActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -97,7 +98,8 @@ public class VendorController {
 		return voteId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/store/draft_activity/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/draft/activity/update", method = RequestMethod.POST)
+	@ResponseBody
 	public String draftExistActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -114,7 +116,8 @@ public class VendorController {
 		return result > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/store/save_activity/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/save/activity/create", method = RequestMethod.POST)
+	@ResponseBody
 	public String saveNewActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -131,7 +134,8 @@ public class VendorController {
 		return voteId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/store/save_activity/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/save/activity/update", method = RequestMethod.POST)
+	@ResponseBody
 	public String saveExistActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -148,7 +152,8 @@ public class VendorController {
 		return result > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/store/release_activity/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/release/activity/create", method = RequestMethod.POST)
+	@ResponseBody
 	public String releaseNewActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -165,7 +170,8 @@ public class VendorController {
 		return voteId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/store/release_activity/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/release/activity/update", method = RequestMethod.POST)
+	@ResponseBody
 	public String releaseExistActivity(@RequestBody String json) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -187,7 +193,8 @@ public class VendorController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/store/delete_activity",  method = RequestMethod.POST)
+	@RequestMapping(value = "/store/delete/activity",  method = RequestMethod.POST)
+	@ResponseBody
 	public String deleteActivity(@RequestBody int voteId){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -205,15 +212,21 @@ public class VendorController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/store/close_activity", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/close/activity", method = RequestMethod.POST)
+	@ResponseBody
 	public String closeActivity(@RequestBody int voteId){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Timestamp current = new Timestamp(System.currentTimeMillis());
-		int result = vActivityDAO.updateEndDateAndStatus(voteId, current, Constant.ACTIVITY_CLOSED_STATUS);
+		int voteStatus = vActivityDAO.checkVoteStatus(voteId);
+		int result = 0;
 		
+		if (voteStatus == Constant.ACTIVITY_RELEASE_STATUS) {
+			Timestamp current = new Timestamp(System.currentTimeMillis());
+		    result = vActivityDAO.updateEndDateAndStatus(voteId, current, Constant.ACTIVITY_CLOSED_STATUS);
+		}
+				
 		((ConfigurableApplicationContext)context).close();
 		
 		return result > 0 ? "Success" : "Failed";
@@ -224,15 +237,21 @@ public class VendorController {
 	 * @param voteId
 	 * @return
 	 */
-	@RequestMapping(value = "/store/release_activity", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/release/activity/immediate", method = RequestMethod.POST)
+	@ResponseBody
 	public String releaseActivity(@RequestBody int voteId){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Timestamp current = new Timestamp(System.currentTimeMillis());
-		int result = vActivityDAO.updateStartDateAndStatus(voteId, current, Constant.ACTIVITY_RELEASE_STATUS);
+		int voteStatus = vActivityDAO.checkVoteStatus(voteId);
+		int result = 0;
 		
+		if (voteStatus == Constant.ACTIVITY_SAVE_STATUS) {
+			Timestamp current = new Timestamp(System.currentTimeMillis());
+		    result = vActivityDAO.updateStartDateAndStatus(voteId, current, Constant.ACTIVITY_RELEASE_STATUS);
+		}
+				
 		((ConfigurableApplicationContext)context).close();
 		
 		return result > 0 ? "Success" : "Failed";
@@ -244,7 +263,6 @@ public class VendorController {
 	 * @return
 	 */
 	@RequestMapping(value = "/store/activityresult", method = RequestMethod.GET)
-	@ResponseBody
 	public String showVendorResult(@RequestParam(value = "voteId", required = true) int voteId, Model model){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -253,7 +271,7 @@ public class VendorController {
 		ChoiceDAO choiceDAO = (ChoiceDAO) context.getBean("ChoiceDAO");
 		AdviceDAO adviceDAO = (AdviceDAO) context.getBean("AdviceDAO");
 		
-		VoteResult vResult = new VoteResult();
+	//	VoteResult vResult = new VoteResult();
 		List<ItemResult> iList = new ArrayList<ItemResult>();
 		List<Advice> aList = new ArrayList<Advice>();
 		
@@ -271,10 +289,13 @@ public class VendorController {
 		}
 		
 		//finally build the model
-		vResult.setItemResult(iList);
-		vResult.setAdviceList(aList);
+	  /*vResult.setItemResult(iList);
+		vResult.setAdviceList(aList);*/
 		
-		model.addAttribute("activityresult", vResult);
+	//	model.addAttribute("activityresult", vResult);
+		model.addAttribute("resultlist", iList);
+		model.addAttribute("advicelist", aList);
+		
 	     
 	     ((ConfigurableApplicationContext)context).close();
 	     

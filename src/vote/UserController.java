@@ -32,8 +32,7 @@ public class UserController {
 	 * @Description: 获取正在发布的活动信息列表
 	 * @return
 	 */
-	@RequestMapping(value = "/user/active_activitylist", method = RequestMethod.GET)
-	@ResponseBody
+	@RequestMapping(value = "/user/active/activitylist", method = RequestMethod.GET)
 	public String getReleasingActivity(Model model){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -52,7 +51,7 @@ public class UserController {
 	 * @param json
 	 * @return
 	 */
-	@RequestMapping(value = "/user/submit_choice", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/submit/choice", method = RequestMethod.POST)
 	public String submitChoice(@RequestBody String json){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -67,7 +66,7 @@ public class UserController {
 		return choiceId > 0 ? "Success" : "Failed";
 	}
 	
-	@RequestMapping(value = "/user/submit_choices", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/submit/choices", method = RequestMethod.POST)
 	public String submitChoices(@RequestBody String json){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -122,7 +121,7 @@ public class UserController {
 	 * @param json
 	 * @return
 	 */
-	@RequestMapping(value = "/user/submit_advice", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/submit/advice", method = RequestMethod.POST)
 	public String submitAdvice(@RequestBody String json){
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");

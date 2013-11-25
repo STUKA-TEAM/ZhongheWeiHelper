@@ -1,5 +1,7 @@
 package lottery;
 
+import java.math.BigDecimal;
+
 /**
  * @Title: LotteryPrize
  * @Description: 奖品信息配置model
@@ -13,7 +15,7 @@ public class LotteryPrize {
 	private String prizeName;
 	private String prizeContent;
 	private int luckyNum;
-	private double luckyPercent;
+	private BigDecimal luckyPercent;
 	
 	/**
 	 * @category constructor()
@@ -23,7 +25,7 @@ public class LotteryPrize {
 	}
 	
 	public LotteryPrize(int lotteryId, String prizeName, String prizeContent, int luckyNum, 
-			double luckyPercent){
+			BigDecimal luckyPercent){
 		this.setLotteryId(lotteryId);
 		this.prizeName = prizeName;
 		this.prizeContent = prizeContent;
@@ -98,13 +100,13 @@ public class LotteryPrize {
 	/**
 	 * @return the luckyPercent
 	 */
-	public double getLuckyPercent() {
+	public BigDecimal getLuckyPercent() {
 		return luckyPercent;
 	}
 	/**
 	 * @param luckyPercent the luckyPercent to set
 	 */
-	public void setLuckyPercent(double luckyPercent) {
+	public void setLuckyPercent(BigDecimal luckyPercent) {
 		this.luckyPercent = luckyPercent;
 	}	
 	

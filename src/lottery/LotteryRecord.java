@@ -7,11 +7,25 @@ package lottery;
  * @author ben
  * @date 2013年11月21日
  */
-public class LotteryRecord {
+public class LotteryRecord {	
 	private int recordId;
 	private int lotteryId;
 	private String openId;
 	private int lotteryResult;
+	
+	/**
+	 * @category constructor()
+	 */
+	public LotteryRecord(){
+		super();
+	}
+	
+	public LotteryRecord(int lotteryId, String openId, int lotteryResult) {
+		super();
+		this.lotteryId = lotteryId;
+		this.openId = openId;
+		this.lotteryResult = lotteryResult;
+	}
 	
 	/**
 	 * @return the recordId
