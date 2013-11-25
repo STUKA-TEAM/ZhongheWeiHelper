@@ -118,7 +118,7 @@ public class ImageUtil {
 
                 // 生成过渡图像
                 Image image = src.getScaledInstance(transWidth, transHeight,
-                        Image.SCALE_DEFAULT);
+                        Image.SCALE_SMOOTH);
                 BufferedImage transImg = drawPicture(transWidth, transHeight,
                         image);
 
@@ -128,7 +128,7 @@ public class ImageUtil {
                         transHeight);
                 image = Toolkit.getDefaultToolkit().createImage(
                         new FilteredImageSource(transImg.getScaledInstance(
-                                transWidth, transHeight, Image.SCALE_DEFAULT)
+                                transWidth, transHeight, Image.SCALE_SMOOTH)
                                 .getSource(), cropImageFilter));
                 transImg = drawPicture(transWidth - halfExcessWidth * 2,
                         transHeight, image);
@@ -142,7 +142,7 @@ public class ImageUtil {
 
                 // 生成过渡图像
                 Image image = src.getScaledInstance(transWidth, transHeight,
-                        Image.SCALE_DEFAULT);
+                        Image.SCALE_SMOOTH);
                 BufferedImage transImg = drawPicture(transWidth, transHeight,
                         image);
 
@@ -152,7 +152,7 @@ public class ImageUtil {
                                 - halfExcessHeight * 2);
                 image = Toolkit.getDefaultToolkit().createImage(
                         new FilteredImageSource(transImg.getScaledInstance(
-                                transWidth, transHeight, Image.SCALE_DEFAULT)
+                                transWidth, transHeight, Image.SCALE_SMOOTH)
                                 .getSource(), cropImageFilter));
                 transImg = drawPicture(transWidth, transHeight
                         - halfExcessHeight * 2, image);
@@ -211,7 +211,7 @@ public class ImageUtil {
     	try {
 	    		String classPathString = this.getClass().getClassLoader().getResource("/").getPath();  
 	            String savePathString = classPathString.replaceAll("/WEB-INF/classes/", Constant.IMAGE_NORMAL_PATH);           
-	            ImageIO.write(img, Constant.IMAGE_TYPE_PNG, new File(savePathString + 
+	            ImageIO.write(img, Constant.IMAGE_TYPE_JPG, new File(savePathString + 
 	            		imageID + sizeType)); 
 	            return true;
 		} catch (Exception e) {
