@@ -125,7 +125,7 @@ public class OrderStoreController {
         manager.setOrder(userOrder.getOrderId(), userOrder.getState());
         return "{result:success}";
     }
-
+/*
     @RequestMapping(value = "/store/order/today", method = RequestMethod.GET)
     public @ResponseBody
     String GetOrder() {
@@ -148,7 +148,7 @@ public class OrderStoreController {
         }
         return null;
     }
-
+*/
     @RequestMapping(value = "/store/order", method = RequestMethod.GET)
     public String GetOrderPage() {
         return "OrderManage";
