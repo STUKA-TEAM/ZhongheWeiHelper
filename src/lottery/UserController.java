@@ -1,6 +1,5 @@
 package lottery;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import tools.Constant;
+import tools.RandomUtil;
 
 /**
  * @Title: UserController
@@ -105,9 +105,8 @@ public class UserController {
 		String openId = identifier.getOpenId();
 		
 		int chanceLeft = lActivityDAO.getChanceNum(lotteryId) - lotteryRecordDAO.getChanceUsed(openId, lotteryId);
-		if(chanceLeft >= 1){
-			List<LotteryPrize> pList = lPrizeDAO.getLotteryPrizeList(lotteryId);
-			
+		if(chanceLeft >= 1){ //可以抽奖
+			List<LotteryPrize> pList = lPrizeDAO.getLotteryPrizeList(lotteryId);			
 			/**抽奖过程*/
 			LuckyResult luckyResult = null;
 			Random rand = new Random();
@@ -117,28 +116,37 @@ public class UserController {
 			for(int i = 0; i < pList.size(); i ++){
 				LotteryPrize temp = pList.get(i);
 				if((lotteryResult >= sumPercent) && (lotteryResult < sumPercent + temp.getLuckyPercent().doubleValue())){
+					synchronized (this) {
 					int restLuckyNum = temp.getLuckyNum() - luckyRecordDAO.getActualNum(temp.getPrizeId());										
-					if(restLuckyNum > 0){
-						//中奖，向数据库中插入记录
+					if(restLuckyNum > 0){ // 中奖						
 						LotteryRecord lotteryRecord = new LotteryRecord(lotteryId, openId, Constant.WITH_PRIZE);
 						lotteryRecordDAO.insertLotteryRecord(lotteryRecord);
-			//			LuckyRecord luckyRecord = new LuckyRecord(temp.getPrizeId(), openId, ,Constant.PRIZE_ON);
-			//			luckyRecordDAO.insertLuckyRecord(luckyRecord);
+						
+						//兑奖码依赖于prizeId
+						LuckyRecord luckyRecord = new LuckyRecord(temp.getPrizeId(), openId, null, Constant.PRIZE_ON);
+						int luckyId = luckyRecordDAO.insertLuckyRecord(luckyRecord);
+						String prizeKey = RandomUtil.generateMixedString(luckyId, Constant.PRIZEKEY_LENGTH);
+						luckyRecordDAO.updatePrizeKeyByLuckyId(luckyId, prizeKey);
+						
+						luckyResult = new LuckyResult(temp.getPrizeName(), temp.getPrizeContent(), prizeKey, chanceLeft - 1);
 					}
-					else { //奖品被领完
+					else { // 奖品被领完
 						System.out.println("no more prizes, poor guy!");
+					}
 					}
 					break;
 				}
 				sumPercent += temp.getLuckyPercent().doubleValue();
 			}
-			if (luckyResult == null) {    //没有中奖    
+			if (luckyResult == null) {    // 没有中奖    
 				LotteryRecord lotteryRecord = new LotteryRecord(lotteryId, openId, Constant.WITHOUT_PRIZE);
 				lotteryRecordDAO.insertLotteryRecord(lotteryRecord);
 				luckyResult = new LuckyResult();
 				luckyResult.setChanceLeft(chanceLeft - 1);
 			}
 		}
+		
+		((ConfigurableApplicationContext)context).close();
 		
 		return "";
 	}
