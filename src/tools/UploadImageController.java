@@ -28,6 +28,7 @@ public class UploadImageController {
         @RequestParam("file") MultipartFile fileFromForm) {
 		UploadImageResponseMessage responseMessage = new UploadImageResponseMessage();
 		  Gson gson = new Gson();
+		  System.out.println(fileFromForm.getContentType());
 		  if (!fileFromForm.isEmpty()) {
               try {
 				InputStream inputStream = fileFromForm.getInputStream();		
@@ -36,11 +37,6 @@ public class UploadImageController {
 				if (!commonValidationTools.checkImageSize(fileFromForm)) {
 					responseMessage.setStatus(false);
 					responseMessage.setMessage("文件大小超过限制！");
-					return gson.toJson(responseMessage);
-					
-				} else if (!commonValidationTools.checkImageType(fileFromForm)) {
-					responseMessage.setStatus(false);
-					responseMessage.setMessage("请确认上传的文件为jpg或者png格式！");
 					return gson.toJson(responseMessage);
 				}else {
 					ImageUtil imageUtil = new ImageUtil();

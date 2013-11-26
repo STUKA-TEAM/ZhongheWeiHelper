@@ -2,12 +2,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>上传图片</title>
+<link href="css/common/uploadify.css" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-<form method="post" action="tools/upload" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-</form>
+
+<input id="file-upload" name="file-upload" type="file" />
+
 </body>
+<script src="js/common/jquery-1.10.2.min.js"></script>
+<script src="js/common/jquery.uploadify.min.js"></script>
+<script src="js/common/swfobject.js"></script>
+<script src="js/common/tools.js"></script>
+<script type="text/javascript">
+//只需要修改 onUploadSuccess 后的函数
+$(document).ready(function() {
+	var myFiles = new Array();
+	var swfpath = getRootPath() + '/js/common/uploadify.swf';
+	var uploadPath = getRootPath() + '/tools/upload';
+	var dataFormServer = '';
+	var myFileCnt = 0;
+	$('#file-upload').uploadify({
+	'fileTypeDesc' : '图片文件',
+	'fileTypeExts' : '*.jpg; *.png',
+	'fileSizeLimit' : '2000KB',
+	'width' : 70,
+	'height' : 28,
+	'swf': swfpath,
+	'uploader': uploadPath,
+	'buttonText': '上传图片',
+	'multi' : false,
+	'auto' : true,
+	'fileObjName' : 'file',
+	'checkExisting' : false,
+	'onUploadSuccess' : function(file, data, response) {		
+		/**Do some thing you want**/
+		alert(data);
+	}
+	});
+});
+</script>
 </html>
