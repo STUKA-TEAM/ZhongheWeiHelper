@@ -17,12 +17,13 @@ public class RandomUtil {
 	 * @param length 随机字符串长度
 	 * @return 随机字符串
 	 */
-	public static String generateMixedString(int length){
+	public static final String generateMixedString(int seed, int length){
 		StringBuffer sb = new StringBuffer();
-		Random rand = new Random();
+		Random rand = new Random(seed);
 		for (int i = 0; i < length; i++) {
 			sb.append(Constant.ALL_CHAR.charAt(rand.nextInt(62)));
 		}
+		
 		return sb.toString();
 	}
 }

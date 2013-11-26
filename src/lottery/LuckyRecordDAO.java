@@ -88,6 +88,19 @@ public class LuckyRecordDAO {
 		return effectedRowNum;
 	}
 	
+	/**
+	 * @Title: updatePrizeKeyByLuckyId
+	 * @Description: 根据中奖Id更新兑奖码
+	 * @param luckyId
+	 * @param prizeKey
+	 * @return
+	 */
+	public int updatePrizeKeyByLuckyId(int luckyId, String prizeKey){
+		String SQL = "UPDATE lottery_lucky_record SET PrizeKey = ? WHERE LuckyId = ?";
+		int effectedRowNum = jdbcTemplate.update(SQL, prizeKey, luckyId);
+		return effectedRowNum;
+	}
+	
 	//query
 	/**
 	 * @Title: getActualNum

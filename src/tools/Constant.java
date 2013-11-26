@@ -42,6 +42,7 @@ public final class Constant {
     /*prize status*/
     public static final int PRIZE_ON = 1;
     public static final int PRIZE_OFF = 0;
+    public static final int PRIZEKEY_LENGTH = 15;
     
     /*lottery status*/
     public static final int WITH_PRIZE = 1;
