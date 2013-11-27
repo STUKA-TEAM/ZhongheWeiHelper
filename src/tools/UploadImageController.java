@@ -28,7 +28,6 @@ public class UploadImageController {
         @RequestParam("file") MultipartFile fileFromForm) {
 		UploadImageResponseMessage responseMessage = new UploadImageResponseMessage();
 		  Gson gson = new Gson();
-		  System.out.println(fileFromForm.getContentType());
 		  if (!fileFromForm.isEmpty()) {
               try {
 				InputStream inputStream = fileFromForm.getInputStream();		
