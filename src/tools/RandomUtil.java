@@ -17,8 +17,9 @@ public class RandomUtil {
 	 * @param length 随机字符串长度
 	 * @return 随机字符串
 	 */
-	public static final String generateMixedString(int seed, int length){
+	public static final String generateMixedString(long primaryKey, int length){
 		StringBuffer sb = new StringBuffer();
+		long seed = primaryKey * 1000000000 + System.currentTimeMillis() % 1000000000;
 		Random rand = new Random(seed);
 		for (int i = 0; i < length; i++) {
 			sb.append(Constant.ALL_CHAR.charAt(rand.nextInt(62)));

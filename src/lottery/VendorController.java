@@ -38,8 +38,15 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		List<LotteryActivity> aList = lActivityDAO.getActivityList();		
-		model.addAttribute("activitylist", aList);
+		List<LotteryActivity> draftList = lActivityDAO.getActivityListByStatus(Constant.ACTIVITY_DRAFT_STATUS);		
+		List<LotteryActivity> savedList = lActivityDAO.getActivityListByStatus(Constant.ACTIVITY_SAVE_STATUS);
+		List<LotteryActivity> releasedList = lActivityDAO.getActivityListByStatus(Constant.ACTIVITY_RELEASE_STATUS);
+		List<LotteryActivity> closedList = lActivityDAO.getActivityListByStatus(Constant.ACTIVITY_CLOSED_STATUS);
+		
+		model.addAttribute("draftlist", draftList);
+		model.addAttribute("savedlist", savedList);
+		model.addAttribute("releasedlist", releasedList);
+		model.addAttribute("closedlist", closedList);
 		
 		((ConfigurableApplicationContext)context).close();
 		
