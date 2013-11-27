@@ -3,43 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <title>上传图片</title>
+<!-- 1.需要的css资源 -->
 <link href="css/common/uploadify.css" rel="stylesheet" type="text/css"></link>
+
 </head>
 <body>
-
+<!-- 2.文件上传按钮  -->
 <input id="file-upload" name="file-upload" type="file" />
 
+<!-- 3.文件上传成功后，tools.js中函数会将图片在服务器上的值（出去size和后缀）写入这个input -->
+<input id="imgPathID" value = " " type="hidden" />
+
+<!-- 测试button -->
+<button type="button" onclick="alert( $('#imgPathID').val())" >显示图片在服务器上路径</button>
+
 </body>
+
+<!-- 4.需要的js资源 -->
 <script src="js/common/jquery-1.10.2.min.js"></script>
 <script src="js/common/jquery.uploadify.min.js"></script>
 <script src="js/common/swfobject.js"></script>
 <script src="js/common/tools.js"></script>
 <script type="text/javascript">
-//只需要修改 onUploadSuccess 后的函数
-$(document).ready(function() {
-	var myFiles = new Array();
-	var swfpath = getRootPath() + '/js/common/uploadify.swf';
-	var uploadPath = getRootPath() + '/tools/upload';
-	var dataFormServer = '';
-	var myFileCnt = 0;
-	$('#file-upload').uploadify({
-	'fileTypeDesc' : '图片文件',
-	'fileTypeExts' : '*.jpg; *.png',
-	'fileSizeLimit' : '2000KB',
-	'width' : 70,
-	'height' : 28,
-	'swf': swfpath,
-	'uploader': uploadPath,
-	'buttonText': '上传图片',
-	'multi' : false,
-	'auto' : true,
-	'fileObjName' : 'file',
-	'checkExisting' : false,
-	'onUploadSuccess' : function(file, data, response) {		
-		/**Do some thing you want**/
-		alert(data);
-	}
-	});
-});
+$(document).ready(uploadImg());
 </script>
+<!-- ************ -->
+
 </html>
