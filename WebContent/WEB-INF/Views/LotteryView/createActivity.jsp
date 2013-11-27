@@ -5,6 +5,7 @@
 <body>
 <script src="../../../js/common/jquery-1.10.2.min.js"></script>
 <script src="../../../js/lottery/createActivity.js"></script>
+<script src="../../../js/common/tools.js"></script>
 
 <div id = "createActivity">
 <form method="post" action="tools/upload" enctype="multipart/form-data">

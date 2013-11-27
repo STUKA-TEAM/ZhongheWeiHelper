@@ -8,16 +8,19 @@ $(document).ready(function() {
 			endDate : $('input[name="EndDate"]').val(),
 			chanceNum : parseInt($('input[name="ChanceNum"]').val() , 10),
 		};
+		if(activity.startDate == ''){
+			activity.startDate = null;
+		}
+		if(activity.endDate == ''){
+			activity.endDate = null;
+		}
 		alert(JSON.stringify(activity));
 		var request = $.ajax({
 			type : "POST",
-			url : "http://localhost:8080/ZhongheWeiHelper/lottery/store/draft/activity/create",
-			contentType: "application/json",
+			url : getRootPath() + '/lottery/store/draft/activity/create',
+			contentType: 'application/json',
 			data : JSON.stringify(activity), 
-	        cache: false, 
-	        success: function(data){
-	        	 alert(data);
-	        }			
+	        cache: false, 	
 		});
 		request.done(function(msg) {
 			alert("Data Saved: " + msg);
