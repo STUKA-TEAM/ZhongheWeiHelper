@@ -149,5 +149,4 @@ public class LotteryActivity {
 	public void setLpList(List<LotteryPrize> prizeList) {
 		this.prizeList = prizeList;
 	}
-	
 }

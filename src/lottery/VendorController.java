@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import tools.Constant;
+import tools.ResponseMessage;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @Title: VendorController
@@ -90,11 +92,13 @@ public class VendorController {
 	@RequestMapping(value = "/store/draft/activity/create", method = RequestMethod.POST)
 	@ResponseBody
 	public String draftNewActivity(@RequestBody String json) {
-		ApplicationContext context = 
+/*		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
 		lActivity.setLotteryStatus(Constant.ACTIVITY_DRAFT_STATUS);
@@ -102,7 +106,17 @@ public class VendorController {
 		
 		((ConfigurableApplicationContext)context).close();
 		
-		return lotteryId > 0 ? "Success" : "Failed";
+		ResponseMessage rMessage = new ResponseMessage();
+		if (lotteryId > 0) {
+			rMessage.setStatus(true); 
+			rMessage.setMessage("Success!");
+		}else {
+		    rMessage.setStatus(false);
+		    rMessage.setMessage("Create failed!");
+		}		
+		String rJson = gson.toJson(rMessage);		
+		return rJson;*/
+		return "OK";
 	}
 	
 	@RequestMapping(value = "/store/draft/activity/update", method = RequestMethod.POST)
@@ -112,7 +126,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
 		lActivity.setLotteryStatus(Constant.ACTIVITY_DRAFT_STATUS);
@@ -130,7 +146,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
 		lActivity.setLotteryStatus(Constant.ACTIVITY_SAVE_STATUS);
@@ -148,7 +166,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
         LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
 		lActivity.setLotteryStatus(Constant.ACTIVITY_SAVE_STATUS);
@@ -166,7 +186,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
         LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
 		lActivity.setLotteryStatus(Constant.ACTIVITY_RELEASE_STATUS);
@@ -184,7 +206,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
         LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
 		lActivity.setLotteryStatus(Constant.ACTIVITY_RELEASE_STATUS);

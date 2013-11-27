@@ -8,6 +8,7 @@
    <ul>
       <c:forEach items = "${draftlist}" var = "activity" >
         <li><c:out value = "${activity.lotteryName}"/>
+        <a href="http://localhost:8080/ZhongheWeiHelper/lottery/store/newactivity/create">编辑</a>
         </li>
       </c:forEach>
    </ul>
