@@ -67,7 +67,7 @@ public class VoteActivityDAO {
 			}
 		}, kHolder);
 		
-		if (result > 0) {    //insert items
+		if (result > 0 && vActivity.getViList() != null) {    //insert items
 			int voteId = kHolder.getKey().intValue();
 			
 			for (int i = 0; i < vActivity.getViList().size(); i++) {

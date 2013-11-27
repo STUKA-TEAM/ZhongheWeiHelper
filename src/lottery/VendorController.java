@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import tools.Constant;
 
 
+
+import tools.ResponseMessage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -94,24 +94,22 @@ public class VendorController {
 	 */
 	@RequestMapping(value = "/store/draft/activity/create", method = RequestMethod.POST)
 	@ResponseBody
-	public String draftNewActivity(@RequestBody String json) {
-			return "String";
-		
-/*		ApplicationContext context = 
+	public String draftNewActivity(@RequestBody String json) {		
+		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		GsonBuilder builder = new GsonBuilder();
+		GsonBuilder builder = new GsonBuilder();            //parse input json
 		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
 		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
-		lActivity.setLotteryStatus(Constant.ACTIVITY_DRAFT_STATUS);
+		lActivity.setLotteryStatus(Constant.ACTIVITY_DRAFT_STATUS);  //deal with DB
 		int lotteryId = lActivityDAO.insertActivity(lActivity);
 		
 		((ConfigurableApplicationContext)context).close();
 		
-		ResponseMessage rMessage = new ResponseMessage();
+		ResponseMessage rMessage = new ResponseMessage();   //return message
 		if (lotteryId > 0) {
 			rMessage.setStatus(true); 
 			rMessage.setMessage("Success!");
@@ -120,8 +118,7 @@ public class VendorController {
 		    rMessage.setMessage("Create failed!");
 		}		
 		String rJson = gson.toJson(rMessage);		
-		return rJson;*/
-		
+		return rJson;	
 	}
 	
 	@RequestMapping(value = "/store/draft/activity/update", method = RequestMethod.POST)

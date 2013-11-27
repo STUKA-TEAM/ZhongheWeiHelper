@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$("#draft").click(function() {
-	
 		var activity = {
 			lotteryName : $('input[name="LotteryName"]').val(),
 			lotterySummary : $('input[name="LotterySummary"]').val(),

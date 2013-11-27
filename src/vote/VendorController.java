@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import tools.Constant;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @Title: VendorController
@@ -87,7 +88,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		VoteActivity vActivity = gson.fromJson(json, VoteActivity.class);
 		
 		vActivity.setVoteStatus(Constant.ACTIVITY_DRAFT_STATUS);
@@ -105,7 +108,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		VoteActivity vActivity = gson.fromJson(json, VoteActivity.class);
 		
 		vActivity.setVoteStatus(Constant.ACTIVITY_DRAFT_STATUS);
@@ -123,7 +128,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		VoteActivity vActivity = gson.fromJson(json, VoteActivity.class);
 		
 		vActivity.setVoteStatus(Constant.ACTIVITY_SAVE_STATUS);
@@ -141,7 +148,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		VoteActivity vActivity = gson.fromJson(json, VoteActivity.class);
 		
 		vActivity.setVoteStatus(Constant.ACTIVITY_SAVE_STATUS);
@@ -159,7 +168,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		VoteActivity vActivity = gson.fromJson(json, VoteActivity.class);
 		
 		vActivity.setVoteStatus(Constant.ACTIVITY_RELEASE_STATUS);
@@ -177,7 +188,9 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		Gson gson = new Gson();
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
+		Gson gson = builder.create();
 		VoteActivity vActivity = gson.fromJson(json, VoteActivity.class);
 		
 		vActivity.setVoteStatus(Constant.ACTIVITY_RELEASE_STATUS);

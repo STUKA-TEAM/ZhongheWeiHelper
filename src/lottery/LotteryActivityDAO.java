@@ -67,21 +67,21 @@ public class LotteryActivityDAO {
 			}
 		}, kHolder);
 		
-		if (result > 0) {    //insert items
+		if (result > 0 && lActivity.getLpList() != null) {    //insert items
 			int lotteryId = kHolder.getKey().intValue();
 			List<LotteryPrize> pList = lActivity.getLpList();
-			
-			/**按中奖率由小到大排序*/
+
+			/** 按中奖率由小到大排序 */
 			Collections.sort(pList, new Comparator<LotteryPrize>() {
 				@Override
 				public int compare(LotteryPrize o1, LotteryPrize o2) {
 					return o1.getLuckyPercent().compareTo(o2.getLuckyPercent());
 				}
 			});
-			
+
 			for (int i = 0; i < pList.size(); i++) {
 				LotteryPrize lPrize = pList.get(i);
-				insertPrize(lPrize, lotteryId);			
+				insertPrize(lPrize, lotteryId);
 			}
 		}
 		
