@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	$("#draft").click(function() {
+	
 		var activity = {
 			lotteryName : $('input[name="LotteryName"]').val(),
 			lotterySummary : $('input[name="LotterySummary"]').val(),
@@ -14,7 +15,6 @@ $(document).ready(function() {
 			url : "http://localhost:8080/ZhongheWeiHelper/lottery/store/draft/activity/create",
 			contentType: "application/json",
 			data : JSON.stringify(activity), 
-			dataType: 'json',
 	        cache: false, 
 	        success: function(data){
 	        	 alert(data);
@@ -25,6 +25,6 @@ $(document).ready(function() {
 		});
 		request.fail(function(jqXHR, textStatus) {
 			alert("Request failed: " + textStatus);
-		});
+		});	
 	});
 });

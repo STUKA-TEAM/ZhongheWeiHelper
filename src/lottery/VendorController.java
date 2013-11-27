@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import tools.Constant;
-import tools.ResponseMessage;
+
+
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -92,6 +95,8 @@ public class VendorController {
 	@RequestMapping(value = "/store/draft/activity/create", method = RequestMethod.POST)
 	@ResponseBody
 	public String draftNewActivity(@RequestBody String json) {
+			return "String";
+		
 /*		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
@@ -116,7 +121,7 @@ public class VendorController {
 		}		
 		String rJson = gson.toJson(rMessage);		
 		return rJson;*/
-		return "OK";
+		
 	}
 	
 	@RequestMapping(value = "/store/draft/activity/update", method = RequestMethod.POST)
