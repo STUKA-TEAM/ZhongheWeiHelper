@@ -7,8 +7,11 @@
   
 
    <!-- Example Definition for OrderDishDAO bean -->
-   <!-- <bean id="OrderDishDAO" class="TestJDBCTemplate.OrderDishDAO"> -->
+   <!-- <bean id="OrderDishDAO" class="TestJDBCTemplate.OrderDishDao"> -->
       <!-- <property name="dataSource"  ref="dataSource" /> -->    
    <!-- </bean> -->
+    <bean id="WeatherCityDAO" class="weather.WeatherCityDAO">
+     <property name="dataSource" ref="dataSource"/>
+   </bean>
       
 </beans>
