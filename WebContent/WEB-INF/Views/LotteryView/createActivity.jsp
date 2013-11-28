@@ -27,6 +27,19 @@
 <div>最大抽奖次数
 <input type="text" name="ChanceNum" />
 </div>
+<div >奖项配置
+<input type="button" value="Add Row" onclick="addRow('prizeTable')" />
+<input type="button" value="Delete Row" onclick="deleteRow('prizeTable')" />
+<table id="prizeTable">
+<tr>
+<th></th>
+<th>奖项名称</th>
+<th>奖品内容</th>
+<th>奖品数量</th>
+<th>中奖概率</th>
+</tr>
+</table>
+</div>
 <div>
 <button type="button" id="draft">保存为草稿</button>
 <button type="button" id="save">保存为待发布</button>

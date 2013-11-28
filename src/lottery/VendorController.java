@@ -4,11 +4,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import tools.Constant;
-
-
-
 import tools.ResponseMessage;
 
 import com.google.gson.Gson;
@@ -33,6 +32,14 @@ import com.google.gson.GsonBuilder;
  */
 @Controller
 public class VendorController {
+	@Autowired
+	private ActivityValidation activityValidation;
+	
+	public void setActivityValidation(
+			ActivityValidation activityValidation){
+		this.activityValidation = activityValidation;
+	}
+	
 	/**
 	 * @Description: 获取所有活动信息列表
 	 * @return
@@ -107,8 +114,6 @@ public class VendorController {
 		lActivity.setLotteryStatus(Constant.ACTIVITY_DRAFT_STATUS);  //deal with DB
 		int lotteryId = lActivityDAO.insertActivity(lActivity);
 		
-		((ConfigurableApplicationContext)context).close();
-		
 		ResponseMessage rMessage = new ResponseMessage();   //return message
 		if (lotteryId > 0) {
 			rMessage.setStatus(true); 
@@ -116,8 +121,11 @@ public class VendorController {
 		}else {
 		    rMessage.setStatus(false);
 		    rMessage.setMessage("Create failed!");
-		}		
+		}	
+		
 		String rJson = gson.toJson(rMessage);		
+		((ConfigurableApplicationContext)context).close();
+		
 		return rJson;	
 	}
 	
@@ -143,22 +151,38 @@ public class VendorController {
 	
 	@RequestMapping(value = "/store/save/activity/create", method = RequestMethod.POST)
 	@ResponseBody
-	public String saveNewActivity(@RequestBody String json) {
+	public String saveNewActivity(@RequestBody String json, BindingResult result, Model model) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-		GsonBuilder builder = new GsonBuilder();
+		GsonBuilder builder = new GsonBuilder();             //parse input json
 		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
 		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
-		lActivity.setLotteryStatus(Constant.ACTIVITY_SAVE_STATUS);
-		int lotteryId = lActivityDAO.insertActivity(lActivity);
+		activityValidation.validate(lActivity, result);      //validation
+		ResponseMessage vMessage = new ResponseMessage();    //return message
+		if (result.hasErrors()) {
+			vMessage.setStatus(false);
+			vMessage.setMessage("Serious error!");
+		}
+		else {
+			lActivity.setLotteryStatus(Constant.ACTIVITY_SAVE_STATUS); 
+		    int lotteryId = lActivityDAO.insertActivity(lActivity);
+			if (lotteryId > 0) {
+				vMessage.setStatus(true); 
+				vMessage.setMessage("Success!");
+			}else {
+			    vMessage.setStatus(false);
+			    vMessage.setMessage("Create failed!");
+			}			    
+		}				
 		
-		((ConfigurableApplicationContext)context).close();
+		String rJson = gson.toJson(vMessage);
+		((ConfigurableApplicationContext)context).close();		
 		
-		return lotteryId > 0 ? "Success" : "Failed";
+		return rJson;
 	}
 	
 	@RequestMapping(value = "/store/save/activity/update", method = RequestMethod.POST)
