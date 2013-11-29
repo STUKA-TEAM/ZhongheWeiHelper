@@ -13,13 +13,14 @@
 
 <!-- 3.文件上传成功后，tools.js中函数会将图片在服务器上的值（出去size和后缀）写入这个input -->
 <input id="imgPathID" value = " " type="hidden" />
-
+<!-- 4.文件上传成功后，tools.js会重写这个图片的路径  -->
+<img id="uploadedPic" src=" "/>
 <!-- 测试button -->
 <button type="button" onclick="alert( $('#imgPathID').val())" >显示图片在服务器上路径</button>
 
 </body>
 
-<!-- 4.需要的js资源 -->
+<!-- 5.需要的js资源 -->
 <script src="js/common/jquery-1.10.2.min.js"></script>
 <script src="js/common/jquery.uploadify.min.js"></script>
 <script src="js/common/swfobject.js"></script>

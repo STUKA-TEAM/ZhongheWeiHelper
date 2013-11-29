@@ -27,6 +27,7 @@ function uploadImg() {
 	'checkExisting' : false,
 	'onUploadSuccess' : function(file, data, response) {		
 		$("#imgPathID").val(JSON.parse(data).link);
+		$("#uploadedPic").attr("src", getRootPath() + JSON.parse(data).link + "_small.jpg");
 	}
 	});
 }

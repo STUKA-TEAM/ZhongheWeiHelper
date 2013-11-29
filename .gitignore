@@ -17,4 +17,5 @@
 
 /WebContent/META-INF/*.MF
 
-/.settings/*.prefs
+/.settings/
+/.settings/org.eclipse.core.resources.prefs

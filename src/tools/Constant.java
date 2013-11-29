@@ -11,6 +11,8 @@ public final class Constant {
 	/* baidu LBS */
     public static final String gLbsAk = "AE1f0f9ccf32d1bba22d2bc319cc68e5";
     
+    /* baidu Weather */
+    public static final String WEATHER_URL = "http://api.map.baidu.com/telematics/v3/weather";
 	/*image*/
 	public static final String IMAGE_WINDOWS_PATH = "\\userimages\\";
 	public static final String IMAGE_NORMAL_PATH = "/userimages/";
