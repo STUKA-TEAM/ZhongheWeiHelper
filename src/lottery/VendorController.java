@@ -1,6 +1,7 @@
 package lottery;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +88,9 @@ public class VendorController {
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
 		LotteryActivity lActivity = lActivityDAO.getActivity(lotteryId);
+
 		model.addAttribute("activity", lActivity);
+		model.addAttribute("prizelist", lActivity.getLpList());
 		
 		((ConfigurableApplicationContext)context).close();
 		
@@ -165,7 +168,7 @@ public class VendorController {
 		ResponseMessage vMessage = new ResponseMessage();    //return message
 		if (result.hasErrors()) {
 			vMessage.setStatus(false);
-			vMessage.setMessage("Serious error!");
+			vMessage.setMessage("Input error!");
 		}
 		else {
 			lActivity.setLotteryStatus(Constant.ACTIVITY_SAVE_STATUS); 
@@ -207,22 +210,38 @@ public class VendorController {
 	
 	@RequestMapping(value = "/store/release/activity/create", method = RequestMethod.POST)
 	@ResponseBody
-	public String releaseNewActivity(@RequestBody String json) {
+	public String releaseNewActivity(@RequestBody String json, BindingResult result, Model model) {
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
         LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		
-        GsonBuilder builder = new GsonBuilder();
+        GsonBuilder builder = new GsonBuilder();             //parse input json
 		builder.setDateFormat("yyyy-mm-dd'T'hh:mm");
 		Gson gson = builder.create();
 		LotteryActivity lActivity = gson.fromJson(json, LotteryActivity.class);
 		
-		lActivity.setLotteryStatus(Constant.ACTIVITY_RELEASE_STATUS);
-		int lotteryId = lActivityDAO.insertActivity(lActivity);
+		activityValidation.validate(lActivity, result);      //validation
+		ResponseMessage vMessage = new ResponseMessage();    //return message
+		if (result.hasErrors()) {
+			vMessage.setStatus(false);
+			vMessage.setMessage("Input error!");
+		}
+		else {
+			lActivity.setLotteryStatus(Constant.ACTIVITY_RELEASE_STATUS);
+			int lotteryId = lActivityDAO.insertActivity(lActivity);
+			if (lotteryId > 0) {
+				vMessage.setStatus(true); 
+				vMessage.setMessage("Success!");
+			}else {
+			    vMessage.setStatus(false);
+			    vMessage.setMessage("Create failed!");
+			}			    
+		}				
 		
+		String rJson = gson.toJson(vMessage);
 		((ConfigurableApplicationContext)context).close();
 		
-		return lotteryId > 0 ? "Success" : "Failed";
+		return rJson;
 	}
 	
 	@RequestMapping(value = "/store/release/activity/update", method = RequestMethod.POST)
