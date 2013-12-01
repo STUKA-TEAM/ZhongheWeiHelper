@@ -65,13 +65,13 @@ tragger.style.visibility = "hidden";
 <div class="A-Title">${activity.voteTitle}</div>
 <div class="A-date">${startDate}</div>
 <div class="A-img">
-<img src="../../../userimages/${activity.votePicture}"></div>
+<img src="../../../${activity.votePicture}"></div>
 <div class="A-singleblock">${activity.voteSummary}</div>
 
 <c:forEach items = "${itemlist}" var = "voteItem" >
     <div class="vote-item">
      <c:if test = "${not empty voteItem.itemImage}">
-        <div class="vote-img"><img src="../../../userimages/${voteItem.itemImage}"></div>
+        <div class="vote-img"><img src="../../../${voteItem.itemImage}"></div>
      </c:if>
 	<div class="vote-text">${voteItem.itemDesc}</div>
 	<div class="vote-check">
