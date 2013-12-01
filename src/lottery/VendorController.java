@@ -1,7 +1,6 @@
 package lottery;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +75,29 @@ public class VendorController {
 	}
 	
 	/**
-	 * @Description: 再次利用已结束活动
+	 * @Description: 编辑选中的活动  --> update
+	 * @param lotteryId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/store/newactivity/edit", method = RequestMethod.GET)
+	public String editActivity(@RequestParam(value = "lotteryId", required = true) int lotteryId, Model model){
+		ApplicationContext context = 
+				new ClassPathXmlApplicationContext("All-Modules.xml");
+		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
+		
+		LotteryActivity lActivity = lActivityDAO.getActivity(lotteryId);
+
+		model.addAttribute("activity", lActivity);
+		model.addAttribute("prizelist", lActivity.getLpList());
+		
+		((ConfigurableApplicationContext)context).close();
+		
+		return "editActivity";
+	}
+	
+	/**
+	 * @Description: 再次利用已结束活动 --> insert
 	 * @param lotteryId
 	 * @param model
 	 * @return
@@ -94,7 +115,7 @@ public class VendorController {
 		
 		((ConfigurableApplicationContext)context).close();
 		
-		return "reuseActivity";
+		return "createActivity";
 	}
 	
 	/**
