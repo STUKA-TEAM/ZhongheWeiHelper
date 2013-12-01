@@ -109,5 +109,4 @@ public class LotteryPrize {
 	public void setLuckyPercent(BigDecimal luckyPercent) {
 		this.luckyPercent = luckyPercent;
 	}	
-	
 }
