@@ -25,20 +25,20 @@
 </div>
 </body>
 
-<script src="../../js/common/tools.js"></script>
+<script src="../../js/mobile/tools.js"></script>
 <script type="text/javascript">
 function sendAjax(data, url, successFunc, type){
 	var xmlhttp=new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function()
 	  {		
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200){
 		  if(type=="saveCity")successFunc();
 	      if(type=="search")successFunc(xmlhttp.responseText);
 	  }
+	  }
 	xmlhttp.open("POST",url);
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
-	xmlhttp.send(data);
-	
+	xmlhttp.send(data);	
 }
 function saveCity()
 {

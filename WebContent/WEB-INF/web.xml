@@ -122,6 +122,20 @@
     </servlet-mapping>
 <!-- ******* -->
 
+<!-- message -->    
+    <servlet>
+        <servlet-name>message</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>message</servlet-name>
+        <url-pattern>/message/*</url-pattern>
+    </servlet-mapping>
+<!-- ******* -->
+
 <!-- charset-filter -->
 <filter>
   <filter-name>characterEncodingFilter</filter-name>
