@@ -85,6 +85,12 @@ tragger.style.visibility = "hidden";
 
 <div class="message-container">
 <textarea class="message-content" id="advice" placeholder="您的留言将会令我们将工作做得更好！"></textarea>
+
+<button class="message-submit" onclick="saveAdvice('${activity.voteId}', '${openId}')">发送</button>
+</div>
+</div>
+<!-- 投票结果结束 -->
+
 <!-- 弹窗开始-->
 <div id="alertBack"></div>
 <div id="alertBox">
@@ -93,10 +99,6 @@ tragger.style.visibility = "hidden";
 <button class="button45" onclick="closeAlert()">确定</button>
 </div>
 <!-- 弹窗结束-->
-<button class="message-submit" onclick="saveAdvice('${activity.voteId}', '${openId}')">发送</button>
-</div>
-</div>
-<!-- 投票结果结束 -->
 </div>
 <footer><small>&copy; 上海市实验幼儿园</small></footer>
 </div>
