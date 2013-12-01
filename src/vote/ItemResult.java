@@ -10,6 +10,7 @@ package vote;
 public class ItemResult {
 	private VoteItem voteItem;
 	private int count;
+	private double percent;
 	
 	/**
 	 * @category constructor()
@@ -49,6 +50,20 @@ public class ItemResult {
 	 */
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	/**
+	 * @return the percent
+	 */
+	public double getPercent() {
+		return percent;
+	}
+
+	/**
+	 * @param percent the percent to set
+	 */
+	public void setPercent(double percent) {
+		this.percent = percent;
 	}
 	
 }
