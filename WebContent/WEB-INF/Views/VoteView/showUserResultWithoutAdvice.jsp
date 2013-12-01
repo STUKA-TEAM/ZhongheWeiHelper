@@ -83,18 +83,10 @@ tragger.style.visibility = "hidden";
    </div>
 </c:forEach>
 
-<button class="message-submit" onclick="back()">返回</button>
 </div>
 <!-- 投票结果结束 -->
 </div>
 <footer><small>&copy; 上海市实验幼儿园</small></footer>
 </div>
 </body>
-
-<script src="../../js/common/tools.js"></script>
-<script type="text/javascript">
-function back(){
-	window.location.href = getRootPath() + "/vote/user/active/activitylist";
-}  
-</script>
 </html>

@@ -58,9 +58,9 @@ public class UserController {
 	@RequestMapping(value = "/user/show/activity", method = RequestMethod.GET)
 	public String getOneActivity(@RequestParam(value = "voteId", required = true) int voteId,
 			@CookieValue(value = "openId", required = false) String openId, Model model){
-		if (openId == null || openId == "") {  //check openId
+/*		if (openId == null || openId == "") {  //check openId
 			return "exception";
-		}
+		}*/
 		
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
@@ -158,9 +158,9 @@ public class UserController {
 	@RequestMapping(value = "/user/activityresult", method = RequestMethod.GET)
 	public String showUserResult(@RequestParam(value = "voteId", required = true) int voteId, 
 			@CookieValue(value = "openId", required = false) String openId, Model model){
-		if (openId == null || openId == "") {  //check openId
+/*		if (openId == null || openId == "") {  //check openId
 			return "exception";
-		}
+		}*/
 		
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("All-Modules.xml");
