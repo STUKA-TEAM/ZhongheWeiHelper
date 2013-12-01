@@ -53,4 +53,7 @@ public final class Constant {
     /*random generator*/
     public static final String ALL_CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
+    /*aritcle class*/
+    public static final int LARGE_ITEM_LIST = 0;
+    public static final int SMALL_ITEM_LIST = 1;
 }
