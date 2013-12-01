@@ -1,0 +1,582 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, img, ins, kbd, q, samp, small, strong, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, footer, header, nav, section {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+}
+html{
+text-align: center;
+background-color: #FDF5DD;
+height:100%;
+}
+body {
+  font-family:"Microsoft YaHei";
+  height:100%;
+  width:100%;
+  max-width:360px;
+  text-align: center;
+  margin:0 auto;
+}
+#container {
+   min-height:100%;
+   position:relative;
+}
+header{
+width:100%;
+max-width: 360px;
+text-align: center;
+margin:0 auto;
+overflow: hidden; 
+}
+#mainBody{
+width: 100%;
+margin: 5px auto;
+padding-bottom:30px;
+overflow:hidden;
+}
+footer{
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:30px;   
+}
+small {
+  display:block;
+  font-size:0.8125em;
+  color:#42423F;
+}
+a {
+text-decoration:none;
+}
+img{
+max-width: 100%;
+}
+input, textarea{
+display:block;
+padding-left:3px;
+padding-right:3px;
+border-radius:5px;
+border: 1px solid #827A71; 
+-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+box-sizing: border-box;
+}
+.input75{
+width:82%;
+float:left;
+height:30px;
+}
+.inputDescri{
+width:18%;
+float:left;
+height:24px;
+padding:3px 0px 3px;
+font-size:1.1em;
+}
+button{
+height:32px;
+padding:0px;
+border:0px;
+border-radius:5px;
+border: 1px solid #5E5B54; 
+color:#FFF;
+font-size:1em;
+font-weight:bold;
+background: -webkit-linear-gradient(top, #28CB6F, #009026);
+-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+}
+.button94{
+width:94%;
+}
+.button92{
+width:92%;
+}
+.button45{
+width:45%;
+}
+.overFlow{
+overflow:hidden;
+}
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > div {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
+#mySwipe{
+width:100%;
+margin:0 auto;
+}
+
+.off{
+display: inline-block;
+width: 10px;
+height: 10px;
+border-radius: 10px;
+background: #f3f3f3;
+margin: 0 2px;
+cursor: pointer;
+}
+.on{
+display: inline-block;
+width: 10px;
+height: 10px;
+border-radius: 10px;
+background: #141414;
+margin: 0 2px;
+cursor: pointer;
+}
+.images-pointer{ 
+position: absolute; 
+z-index: 1; 
+left: 0; 
+bottom:3px; 
+width: 100%; 
+color: #fff; 
+background: rgba(0,0,0,.5); 
+height: 20px; 
+line-height: 20px; 
+overflow: hidden; 
+} 
+
+
+#iconBlock{
+width: 90%;
+margin: 0 auto;
+overflow:hidden;
+}
+.iconBlockLink{
+width: 25%;
+float: left;
+}
+.iconBlockLink small{
+margin:0px 12.34% 14.28% 12.34%;
+}
+.iconImg{
+width: 80%;
+border-radius: 50em;
+}
+
+footer small{
+padding-top:8px;
+padding-bottom:5px;
+font-size: 0.6875em;
+}
+
+/** 各模块CSS **/
+/** 各自页面顶端导航开始 **/
+#topNav{
+width:100%;
+height:45px;
+background-color:#3D3D3D;
+}
+.navButton{
+width:50%;
+height:100%;
+display:block;
+float:left;
+}
+.navButtonBack{
+
+width:30px;
+margin:7px auto 8px;
+}
+/** 模块按钮开始 **/
+#moduleList{
+position: absolute;
+top: 45px;
+right: 0;
+width: 50%;
+display: none;
+visibility: hidden;
+border-bottom-right-radius: 4px;
+border-bottom-left-radius: 4px;
+opacity: 0.8;
+background-color:#3D3D3D;
+color:#FFF;
+}
+#navTragger:hover #moduleList{
+display: block;
+visibility: visible;
+}
+.navModule{
+width:100%;
+height:30px;
+display: block;
+visibility: visible;
+}
+/** 模块按钮结束 **/
+/** 各自页面顶端导航结束 **/
+
+/** 大块元素列表开始 **/
+.largeListItem , .article{
+width:92%;
+margin: 10px auto;
+padding-bottom:10px;
+border-radius:5px;
+background-color:#FFF;
+-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+}
+.L-itemTitle{
+width:90%;
+margin: 0px auto;
+height:27px;
+padding-top:16px;
+text-align:left;
+font-size:1.25em;
+}
+.L-itemTime{
+width:90%;
+margin: 0px auto;
+height:20px;
+padding:0px 12px;
+text-align:left;
+font-size:0.8em;
+color:#827A71;
+}
+.L-itemImg{
+width:90%;
+margin: 0px auto;
+padding-top:5px;
+}
+.L-link{
+width:90%;
+margin:0px auto;
+height:25px;
+margin-top:12px;
+padding:6px 0px 6px;
+border-top:1px solid #827A71;
+}
+.L-link-text{
+width:90%;
+height:100%;
+text-align:left;
+float:left;
+}
+.L-link-logo{
+width:10%;
+height:100%;
+float:left;
+}
+/** 大块元素列表结束 **/
+
+/** 小块连续列表开始 **/
+.smallList{
+width:92%;
+margin: 10px auto;
+border-radius:5px;
+background-color:#FFF;
+overflow: hidden; 
+-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+}
+.S-item{
+display:block;
+width:100%;
+margin: 0px auto;
+height:80px;
+border-bottom:1px solid #827A71;
+}
+.S-itemContent{
+width:90%;
+margin: 0px auto;
+padding:10px 0px 10px;
+height:60px;
+}
+.S-itemPic{
+width:20%;
+height:100%;
+float:left;
+}
+.S-itemText{
+width:80%;
+height:20px;
+float:left;
+padding:20px 0px 20px;
+}
+/** 小块连续列结束 **/
+
+/** 天气查询框开始 **/
+.searchBlock{
+width:92%;
+margin: 0px auto;
+height:32px;
+}
+.search{
+width:60%;
+height:30px;
+float:left;
+}
+.searchButton{
+width:30%;
+}
+/** 天气查询框结束 **/
+
+/** 天气查询结果列表开始 **/
+.w-dayWeather{
+width:92%;
+margin: 10px auto;
+border-radius:5px;
+background-color:#FFF;
+-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+}
+.w-date{
+width:90%;
+margin: 0px auto;
+height:27px;
+padding-top:12px;
+text-align:left;
+font-size:1em;
+border-bottom: 1px solid #827A71;
+font-weight:bold;
+}
+.w-picAndDes{
+width:90%;
+margin: 0px auto;
+height:90px;
+}
+.w-pictureBox{
+width:14%;
+padding:5px 0px 5px;
+float:left;
+}
+.w-picture{
+width:100%;
+height:30px;
+padding:5px 0px 5px;
+}
+
+.w-textBox{
+width:86%;
+padding:5px 0px 4px;
+float:left;
+}
+.w-describe{
+width:100%;
+height:21px;
+padding:3px 0px 3px;
+}
+/** 天气查询结果列表结束 **/
+
+/** 留言开始 **/
+.message-container{
+width:92%;
+margin: 10px auto;
+}
+.message-name, .message-contact{
+width:100%;
+height:35px; 
+margin: 10px auto;	
+}
+.message-content{
+width:100%;
+height:100px;
+margin: 10px auto;
+}
+.message-submit{
+width:100%;
+margin: 0px auto;
+padding-left:3px;
+padding-right:3px;
+margin: 10px auto;
+}
+/** 留言结束 **/
+
+/** 最近门店开始**/
+.S-itemText-T{
+width:100%;
+margin: 0px auto 5px;
+text-align:left;
+font-size:1.2em;
+}
+.S-itemText-D{
+width:100%;
+margin: 0px auto 5px;
+text-align:left;
+color:#827A71;
+}
+
+.A-Title{
+width:94%;
+margin:0px auto;
+text-align:left;
+padding:10px 5px 10px;
+font-size:1.2em;
+font-weight:bold;
+}
+.A-singleblock{
+width:94%;
+margin:0px auto;
+text-align:left;
+padding:5px;
+font-size:1em;
+overflow: hidden;
+}
+.A-img{
+width:94%;
+margin:0px auto;
+text-align:left;
+padding:5px;
+}
+/** 最近门店结束**/
+
+/** 订餐开始 **/
+.order-title{
+padding:6px 0px 3px;
+font-size:1.2em;
+font-weight:bold;
+border-bottom:1px solid #5E5B54;
+}
+.order-info{
+width:60%;
+float:left;
+}
+.order-dishName{
+padding:4px 0px 4px;
+}
+.order-dishPrice{
+padding:4px 0px 4px;
+color:#827A71;
+}
+.order-number{
+width:18%;
+float:left;
+border-radius:2px;
+border:1px solid #DDDCDC;
+}
+.order-change{
+height:18px;
+background:#DDDCDC;
+font-weight:bold;
+color:#FFFFFF;
+vertical-align:middle;
+}
+.order-digit{
+height:24px;
+}
+.order-total{
+width:100%;
+float:right;
+height:28px;
+padding:5px 10px 0px;
+text-align:right;
+}
+.successImg{
+float:left;
+margin-right:10px;
+}
+.successMessage{
+float:left;
+width:75%;
+}
+.order-digit-ordered{
+width:18%;
+float:left;
+height:24px;
+padding:18px 0px 18px;
+}
+.order-time{
+width:100%;
+float:right;
+height:28px;
+padding:0px 10px 0px;
+text-align:right;
+}
+/** 订餐结束**/
+
+
+/** 投票开始 **/
+.A-date{
+width:94%;
+margin:0px auto;
+text-align:left;
+padding:0px 5px;
+font-size:0.8em;
+color:#827A71;
+}
+.vote-item{
+width:94%;
+margin: 0px auto;
+height:50px;		
+margin: 5px auto;
+border-radius:5px;
+border: 1px solid #5E5B54; 
+font-size:1em;
+background: -webkit-linear-gradient(top, #FFFFFF, #EFEEEC);
+}
+.vote-img{
+float:left;
+}
+.vote-text{
+width:50%;
+float:left;
+height:24px;
+padding:13px 3% 13px 3%;
+text-align:left;
+}
+.vote-check{
+width:25px;
+height:25px;
+float:right;
+margin:10px;
+}
+input[type="checkbox"] {
+    display:none;
+}
+
+input[type="checkbox"] + label {
+  display:inline-block;
+    width:20px;
+    height:20px;
+    margin:0px;
+    cursor:pointer;
+	border: 2px solid #5E5B54; 
+	border-radius: 3px;
+}
+
+input[type="checkbox"]:checked + label {
+    background:#28CB6F;
+}
+input[type="radio"] {
+    display:none;
+}
+
+
+input[type="radio"] + label{
+   display:inline-block;
+    width:20px;
+    height:20px;
+    margin:0px;
+    cursor:pointer;
+	border: 3px solid #5E5B54; 
+	border-radius: 50%;
+}
+
+input[type="radio"]:checked + label {
+    background:#28CB6F;
+}
+
+.vote-result-name{
+padding:3px 0px 3px;
+}
+.vote-result-bar{
+height:26px;
+background:#28CB6F;
+border-radius:2px;
+border: 1px solid #5E5B54; 
+}
+/** 投票结束 **/
+
+
+
+
