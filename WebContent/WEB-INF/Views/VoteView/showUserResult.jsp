@@ -90,8 +90,8 @@ tragger.style.visibility = "hidden";
 <div id="alertBox">
 <div id="alertTitle">提示: </div>
 <div id="alertContent"></div>
-</div>
 <button class="button45" onclick="closeAlert()">确定</button>
+</div>
 <!-- 弹窗结束-->
 <button class="message-submit" onclick="saveAdvice('${activity.voteId}', '${openId}')">发送</button>
 </div>
