@@ -2,16 +2,19 @@ package article;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
-import message.Message;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+
+import weather.SavedCity;
 
 import com.mysql.jdbc.Statement;
 
@@ -46,4 +49,25 @@ public class ArticleDAO {
 		}, kHolder);		
 		return result == 0 ? result : kHolder.getKey().intValue();
 	}
+	
+	public Article getArticle(int articleId){
+		String SQL = "SELECT * FROM article_record WHERE ArticleId = ?";
+		Article article = jdbcTemplate.queryForObject(SQL, new Object[]{articleId}, new ArticleMapper());		
+		return article;
+	}
+	
+	private static final class ArticleMapper implements RowMapper<Article>{
+		@Override
+		public Article mapRow(ResultSet rs, int arg1) throws SQLException {
+			Article article = new Article();
+			article.setArticleId(rs.getInt("ArticleId"));
+			article.setTitle(rs.getString("Title"));
+			article.setDate(rs.getTimestamp("Date"));
+			article.setImagePath(rs.getString("ImagePath"));
+			article.setContent(rs.getString("Content"));
+			article.setListClass(rs.getInt("ListClass"));
+			article.setArticleClassId(rs.getInt("ArticleClassId"));
+			return article;
+		}   	
+}
 }

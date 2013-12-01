@@ -41,7 +41,7 @@ function sendAjax(data, url, successFunc){
 	xmlhttp.onreadystatechange=function()
 	  {		
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200){
-		  successFunc(responseText);
+		  successFunc(xmlhttp.responseText);
 	  }
 	  }
 	xmlhttp.open("POST",url);
@@ -58,7 +58,7 @@ function submitArticle()
 	article.articleClassId = $('#articleClassId').val();
 	alert(JSON.stringify(article));
 	var url = getRootPath() + "/article/store/add";
-	sendAjax(JSON.stringify(message), url,notice);	
+	sendAjax(JSON.stringify(article), url,notice);	
 }
 function notice(mes){
 	alert(mes);

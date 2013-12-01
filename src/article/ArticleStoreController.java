@@ -19,7 +19,7 @@ public String initial(){
 	return "initialAdd";
 }
 
-@RequestMapping(value = "/store/add", method = RequestMethod.GET)
+@RequestMapping(value = "/store/add", method = RequestMethod.POST)
 @ResponseBody
 public String addArticle(@RequestBody String json){
 try {
@@ -36,4 +36,6 @@ try {
 	return "n";
 }
 }
+
+
 }
