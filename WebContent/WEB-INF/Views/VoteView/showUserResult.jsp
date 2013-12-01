@@ -85,6 +85,14 @@ tragger.style.visibility = "hidden";
 
 <div class="message-container">
 <textarea class="message-content" id="advice" placeholder="您的留言将会令我们将工作做得更好！"></textarea>
+<!-- 弹窗开始-->
+<div id="alertBack"></div>
+<div id="alertBox">
+<div id="alertTitle">提示: </div>
+<div id="alertContent"></div>
+<button class="button45" onclick="closeAlert()">确定</button>
+</div>
+<!-- 弹窗结束-->
 <button class="message-submit" onclick="saveAdvice('${activity.voteId}', '${openId}')">发送</button>
 </div>
 </div>
@@ -95,13 +103,17 @@ tragger.style.visibility = "hidden";
 </body>
 
 <script src="../../js/common/tools.js"></script>
+<script src="../../js/mobile/tools.js"></script>
 <script type="text/javascript">
 function sendAjax(data, url, successFunc){
 	var xmlhttp=new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function()
 	  {		
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200){
 		  successFunc(xmlhttp.responseText);
+	  }else{
+		  switchAlert('抱歉，网络较差请重新提交！');
+	  }		  
 	  }
 	xmlhttp.open("POST",url);
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
@@ -113,7 +125,7 @@ function saveAdvice(voteId, openId){
 	advice.voteId = voteId;
 	advice.adviceContent = document.getElementById('advice').value;
 	if(advice.adviceContent == ''){
-		window.location.href = getRootPath() + "/vote/user/active/activitylist";
+		switchAlert('说点儿什么吧..');
 	}
 	else{
 		var url = getRootPath() + "/vote/user/submit/advice";
@@ -122,8 +134,9 @@ function saveAdvice(voteId, openId){
 }
 function checkResult(message){
 	if(JSON.parse(message).status == true){
-		alert('success!');
-		window.location.href = getRootPath() + "/vote/user/active/activitylist";
+		switchAlert('留言上传成功！');
+	}else{
+		switchAlert('您的留言太多了..');
 	}
 }  
 </script>
