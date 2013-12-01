@@ -7,10 +7,6 @@
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/> 
 <link href='../css/mobilestyle/style.css' rel='stylesheet'/>
-<style>
-
-</style>
-
 </head>
 <body>
 <div id="container">
@@ -72,6 +68,21 @@ tragger.style.visibility = "hidden";
 <button class="message-submit" onclick="addMessage()">发送</button>
 </div>
 <!-- 留言结束 -->
+
+<!-- 弹窗开始-->
+<div id="alertBack"></div>
+<div id="alertBox">
+<div id="alertTitle">提示</div>
+<div id="alertContent">
+成功！
+</div>
+<button class="button45" onclick="closeAlert()">
+确定
+</button>
+</div>
+<!-- 弹窗结束-->
+
+
 <script type="text/javascript">
 function sendAjax(data, url, successFunc){
 	var xmlhttp=new XMLHttpRequest();
@@ -97,14 +108,17 @@ function addMessage()
 	message.contact = document.getElementById("contact").value;
 	message.content = document.getElementById("content").value;
 	var url = getRootPath() + "/message/addmessage";
-	alert(getNoSpace(message.content));
-	sendAjax(JSON.stringify(message), url, notice);	
+	if(message.content.length<10){
+		switchAlert("请再多写点吧！");
+	}else{
+		sendAjax(JSON.stringify(message), url, notice);	
+	}
+	
 }
 function notice(mes){
 	switchAlert(mes);
 }
 </script>
-
 </div>
 
 <footer><small>&copy; 上海市实验幼儿园</small></footer>

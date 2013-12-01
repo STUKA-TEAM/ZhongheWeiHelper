@@ -555,6 +555,9 @@ font-size:1em;
 background: -webkit-linear-gradient(top, #FFFFFF, #EFEEEC);
 }
 .vote-img{
+height:46px;
+width:46px;
+margin:2px;
 float:left;
 }
 .vote-text{

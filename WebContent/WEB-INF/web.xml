@@ -136,6 +136,20 @@
     </servlet-mapping>
 <!-- ******* -->
 
+<!-- article -->    
+    <servlet>
+        <servlet-name>article</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>article</servlet-name>
+        <url-pattern>/article/*</url-pattern>
+    </servlet-mapping>
+<!-- ******* -->
+
 <!-- charset-filter -->
 <filter>
   <filter-name>characterEncodingFilter</filter-name>
