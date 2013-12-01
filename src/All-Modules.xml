@@ -21,5 +21,5 @@
 	<import resource="vote/Vote-Beans.xml"/>
 	<import resource="weather/Weather-Beans.xml"/>
 	<import resource="tools/Tools-Beans.xml"/>
- 
+    <import resource="message/Message-Beans.xml"/>
 </beans>
