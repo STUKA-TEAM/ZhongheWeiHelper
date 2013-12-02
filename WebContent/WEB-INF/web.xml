@@ -150,6 +150,20 @@
     </servlet-mapping>
 <!-- ******* -->
 
+<!-- index -->
+     <servlet>
+        <servlet-name>index</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>index</servlet-name>
+        <url-pattern>/index/*</url-pattern>
+    </servlet-mapping>
+<!-- ******* --> 
+
 <!-- charset-filter -->
 <filter>
   <filter-name>characterEncodingFilter</filter-name>

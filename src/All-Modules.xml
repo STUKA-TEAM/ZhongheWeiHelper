@@ -23,4 +23,5 @@
 	<import resource="tools/Tools-Beans.xml"/>
     <import resource="message/Message-Beans.xml"/>
     <import resource="article/Article-Beans.xml"/>
+    <import resource="index/Index-Beans.xml"/>
 </beans>

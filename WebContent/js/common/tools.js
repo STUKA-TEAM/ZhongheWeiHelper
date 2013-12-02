@@ -6,13 +6,13 @@ function getRootPath(){
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
     return(localhostPaht+projectName);
 }
-function uploadImg() {
+function uploadImg(onclickItem) {
 	var myFiles = new Array();
 	var swfpath = getRootPath() + '/js/common/uploadify.swf';
 	var uploadPath = getRootPath() + '/tools/upload';
 	var dataFormServer = '';
 	var myFileCnt = 0;
-	$('#file-upload').uploadify({
+	$('#'+onclickItem).uploadify({
 	'fileTypeDesc' : '图片文件',
 	'fileTypeExts' : '*.jpg; *.png',
 	'fileSizeLimit' : '2000KB',
@@ -25,9 +25,9 @@ function uploadImg() {
 	'auto' : true,
 	'fileObjName' : 'file',
 	'checkExisting' : false,
-	'onUploadSuccess' : function(file, data, response) {		
-		$("#imgPathID").val(JSON.parse(data).link);
-		$("#uploadedPic").attr("src", getRootPath() + JSON.parse(data).link + "_small.jpg");
+	'onUploadSuccess' : function(file, data, response) {
+		$("#"+onclickItem+"-path").val(JSON.parse(data).link);
+		$("#"+onclickItem+"-img").attr("src", getRootPath() + JSON.parse(data).link + "_small.jpg");
 	}
 	});
 }

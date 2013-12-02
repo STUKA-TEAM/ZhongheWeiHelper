@@ -3,6 +3,7 @@ package article;
 public class ArticleClass {
 private int articleClassId;
 private String articleClassName;
+private int articleClassShowType;
 public int getArticleClassId() {
 	return articleClassId;
 }
@@ -14,6 +15,12 @@ public String getArticleClassName() {
 }
 public void setArticleClassName(String articleClassName) {
 	this.articleClassName = articleClassName;
+}
+public int getArticleClassShowType() {
+	return articleClassShowType;
+}
+public void setArticleClassShowType(int articleClassShowType) {
+	this.articleClassShowType = articleClassShowType;
 }
 
 }

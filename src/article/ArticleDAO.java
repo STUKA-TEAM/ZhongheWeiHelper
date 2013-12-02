@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -29,7 +30,7 @@ public class ArticleDAO {
 	
 	public int insertArticle(final Article article){
 		int result = 0;
-		final String SQL = "insert article_record values(default,?,?,?,?,?,?)";
+		final String SQL = "insert article_record values(default,?,?,?,?,?)";
 		KeyHolder kHolder = new GeneratedKeyHolder();
 		
 		result = jdbcTemplate.update(new PreparedStatementCreator() {			
@@ -42,8 +43,7 @@ public class ArticleDAO {
 				ps.setTimestamp(2, article.getDate());
 				ps.setString(3, article.getImagePath());
 				ps.setString(4, article.getContent());
-				ps.setInt(5, article.getListClass());
-				ps.setInt(6, article.getArticleClassId());
+				ps.setInt(5, article.getArticleClassId());
 				return ps;
 			}
 		}, kHolder);		
@@ -56,6 +56,11 @@ public class ArticleDAO {
 		return article;
 	}
 	
+	public List<Article> getArticleList(int articleClassId){
+		String SQL = "SELECT * FROM article_record WHERE ArticleClassId = ?";
+		List<Article> articleList = jdbcTemplate.query(SQL, new Object[]{articleClassId}, new ArticleMapper());		
+		return articleList;
+	}
 	private static final class ArticleMapper implements RowMapper<Article>{
 		@Override
 		public Article mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -65,9 +70,8 @@ public class ArticleDAO {
 			article.setDate(rs.getTimestamp("Date"));
 			article.setImagePath(rs.getString("ImagePath"));
 			article.setContent(rs.getString("Content"));
-			article.setListClass(rs.getInt("ListClass"));
 			article.setArticleClassId(rs.getInt("ArticleClassId"));
 			return article;
 		}   	
-}
+	}
 }
