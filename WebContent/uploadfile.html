@@ -12,11 +12,11 @@
 <input id="file-upload" name="file-upload" type="file" />
 
 <!-- 3.文件上传成功后，tools.js中函数会将图片在服务器上的值（出去size和后缀）写入这个input -->
-<input id="imgPathID" value = " " type="hidden" />
+<input id="file-upload-path" value = " " type="hidden" />
 <!-- 4.文件上传成功后，tools.js会重写这个图片的路径  -->
-<img id="uploadedPic" src=" "/>
+<img id="file-upload-img" src=" "/>
 <!-- 测试button -->
-<button type="button" onclick="alert( $('#imgPathID').val())" >显示图片在服务器上路径</button>
+<button type="button" onclick="alert( $('#file-upload-path').val())" >显示图片在服务器上路径</button>
 
 </body>
 
@@ -26,8 +26,17 @@
 <script src="js/common/swfobject.js"></script>
 <script src="js/common/tools.js"></script>
 <script type="text/javascript">
-$(document).ready(uploadImg("imgPathID"));
+$(document).ready(uploadImg("file-upload"));
 </script>
 <!-- ************ -->
+
+<!-- 对于一个界面中多个图片上传，如添加项目的界面 -->
+<!-- 在生成新的<input id="******" name="file-upload" type="file" />
+            时，需要变换id值，同时运行uploadImg("new-id")用来完成对这个上传图片按钮的初始化，
+           之后需要建立相对应的 <input id="new-id-path" value = " " type="hidden" />
+     <img id="new-id-img" src=" "/>
+-->
+<!-- ************************************* -->
+
 
 </html>
