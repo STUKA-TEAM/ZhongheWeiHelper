@@ -17,8 +17,9 @@ public class ZTestDAO {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		LotteryActivityDAO lActivityDAO = (LotteryActivityDAO) context.getBean("LotteryActivityDAO");
 		LuckyRecordDAO luckyRecordDAO = (LuckyRecordDAO) context.getBean("LuckyRecordDAO");		
+		LotteryPrizeDAO lPrizeDAO = (LotteryPrizeDAO) context.getBean("LotteryPrizeDAO");
 		
-		LotteryActivity lActivity = new LotteryActivity();
+/*		LotteryActivity lActivity = new LotteryActivity();
 		List<LotteryPrize> lPrizes = new ArrayList<>();
 		
 		lActivity.setLotteryStatus(3);
@@ -34,7 +35,19 @@ public class ZTestDAO {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 	//	lActivityDAO.updateStartDateAndStatus(1, timestamp, Constant.ACTIVITY_RELEASE_STATUS);
 		int num = luckyRecordDAO.getActualNum(1);
-		System.out.println(num);
+		System.out.println(num);*/
+		List<LotteryPrize> pList1 = lPrizeDAO.getLotteryPrizeList(5);
+		List<LotteryPrize> pList2 = lPrizeDAO.getLotteryPrizeListWithOrder(5);
+		
+		for (int i = 0; i < pList1.size(); i++) {
+			LotteryPrize temPrize = pList1.get(i);
+			System.out.println(temPrize.getLuckyPercent());
+		}
+		for (int i = 0; i < pList2.size(); i++) {
+			LotteryPrize temPrize = pList2.get(i);
+			System.out.println(temPrize.getLuckyPercent());
+		}
+		
 	}
 
 }

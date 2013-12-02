@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import lottery.LotteryActivity;
+import lottery.LotteryActivityDAO;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -39,8 +42,15 @@ public class VendorController {
 				new ClassPathXmlApplicationContext("All-Modules.xml");
 		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
 		
-		List<VoteActivity> vList = vActivityDAO.getActivityList();		
-		model.addAttribute("activitylist", vList);
+		List<VoteActivity> draftList = vActivityDAO.getActivityListByStatus(Constant.ACTIVITY_DRAFT_STATUS);		
+		List<VoteActivity> savedList = vActivityDAO.getActivityListByStatus(Constant.ACTIVITY_SAVE_STATUS);
+		List<VoteActivity> releasedList = vActivityDAO.getActivityListByStatus(Constant.ACTIVITY_RELEASE_STATUS);
+		List<VoteActivity> closedList = vActivityDAO.getActivityListByStatus(Constant.ACTIVITY_CLOSED_STATUS);
+		
+		model.addAttribute("draftlist", draftList);
+		model.addAttribute("savedlist", savedList);
+		model.addAttribute("releasedlist", releasedList);
+		model.addAttribute("closedlist", closedList);
 		
 		((ConfigurableApplicationContext)context).close();
 		
@@ -54,6 +64,28 @@ public class VendorController {
 	@RequestMapping(value = "/store/newactivity/create", method = RequestMethod.GET)
 	public String createNewActivity(){
 		return "createActivity";
+	}
+	
+	/**
+	 * @Description: 编辑选中的活动  --> update
+	 * @param voteId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/store/newactivity/edit", method = RequestMethod.GET)
+	public String editActivity(@RequestParam(value = "voteId", required = true) int voteId, Model model){
+		ApplicationContext context = 
+				new ClassPathXmlApplicationContext("All-Modules.xml");
+		VoteActivityDAO vActivityDAO = (VoteActivityDAO) context.getBean("VoteActivityDAO");
+		
+		VoteActivity vActivity = vActivityDAO.getActivity(voteId);
+
+		model.addAttribute("activity", vActivity);
+		model.addAttribute("votelist", vActivity.getViList());
+		
+		((ConfigurableApplicationContext)context).close();
+		
+		return "editActivity";
 	}
 	
 	/**

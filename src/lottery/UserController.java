@@ -106,7 +106,7 @@ public class UserController {
 		
 		int chanceLeft = lActivityDAO.getChanceNum(lotteryId) - lotteryRecordDAO.getChanceUsed(openId, lotteryId);
 		if(chanceLeft >= 1){ //可以抽奖
-			List<LotteryPrize> pList = lPrizeDAO.getLotteryPrizeList(lotteryId);			
+			List<LotteryPrize> pList = lPrizeDAO.getLotteryPrizeListWithOrder(lotteryId);			
 			/**抽奖过程*/
 			LuckyResult luckyResult = null;
 			Random rand = new Random();

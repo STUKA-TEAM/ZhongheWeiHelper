@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -74,14 +71,6 @@ public class LotteryPrizeDAO {
 	public List<Integer> insertPrizeList(List<LotteryPrize> pList){
 		List<Integer> iList = new ArrayList<Integer>();
 		
-		/**按中奖率由小到大排序*/
-		Collections.sort(pList, new Comparator<LotteryPrize>() {
-			@Override
-			public int compare(LotteryPrize o1, LotteryPrize o2) {
-				return o1.getLuckyPercent().compareTo(o2.getLuckyPercent());
-			}
-		});
-		
 		for(int i = 0; i < pList.size(); i++){
 			int temp = insertPrize(pList.get(i));
 			iList.add(temp);
@@ -124,6 +113,18 @@ public class LotteryPrizeDAO {
 	 */
 	public List<LotteryPrize> getLotteryPrizeList(int lotteryId){
 		String SQL = "SELECT * FROM lottery_prize WHERE LotteryId = ?";
+		List<LotteryPrize> pList = jdbcTemplate.query(SQL, new Object[]{lotteryId}, new LotteryPrizeFullMapper());
+		return pList;
+	}
+	
+	/**
+	 * @Title: getLotteryPrizeListWithOrder
+	 * @Description: 根据抽奖活动Id获取对应奖项列表,并按中奖概率的升序排列
+	 * @param lotteryId
+	 * @return
+	 */
+	public List<LotteryPrize> getLotteryPrizeListWithOrder(int lotteryId){
+		String SQL = "SELECT * FROM lottery_prize WHERE LotteryId = ? ORDER BY LuckyPercent ASC";
 		List<LotteryPrize> pList = jdbcTemplate.query(SQL, new Object[]{lotteryId}, new LotteryPrizeFullMapper());
 		return pList;
 	}

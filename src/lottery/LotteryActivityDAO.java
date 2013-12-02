@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -71,14 +69,6 @@ public class LotteryActivityDAO {
 			int lotteryId = kHolder.getKey().intValue();
 			List<LotteryPrize> pList = lActivity.getLpList();
 
-			/** 按中奖率由小到大排序 */
-			Collections.sort(pList, new Comparator<LotteryPrize>() {
-				@Override
-				public int compare(LotteryPrize o1, LotteryPrize o2) {
-					return o1.getLuckyPercent().compareTo(o2.getLuckyPercent());
-				}
-			});
-
 			for (int i = 0; i < pList.size(); i++) {
 				LotteryPrize lPrize = pList.get(i);
 				insertPrize(lPrize, lotteryId);
@@ -107,14 +97,6 @@ public class LotteryActivityDAO {
 			deletePrize(lActivity.getLotteryId());
 			
 			List<LotteryPrize> pList = lActivity.getLpList();
-			
-			/**按中奖率由小到大排序*/
-			Collections.sort(pList, new Comparator<LotteryPrize>() {
-				@Override
-				public int compare(LotteryPrize o1, LotteryPrize o2) {
-					return o1.getLuckyPercent().compareTo(o2.getLuckyPercent());
-				}
-			});
 			
 			for (int i = 0; i < pList.size(); i++) {
 				LotteryPrize lPrize = pList.get(i);
