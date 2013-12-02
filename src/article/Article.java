@@ -8,7 +8,6 @@ private String title;
 private Timestamp date;
 private String imagePath;
 private String content;
-private int listClass;
 private int articleClassId;
 public int getArticleId() {
 	return articleId;
@@ -39,12 +38,6 @@ public String getContent() {
 }
 public void setContent(String content) {
 	this.content = content;
-}
-public int getListClass() {
-	return listClass;
-}
-public void setListClass(int listClass) {
-	this.listClass = listClass;
 }
 public int getArticleClassId() {
 	return articleClassId;

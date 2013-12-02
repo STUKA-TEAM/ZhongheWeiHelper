@@ -6,7 +6,7 @@ function getRootPath(){
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
     return(localhostPaht+projectName);
 }
-function uploadImg() {
+function uploadImg(recordPathId) {
 	var myFiles = new Array();
 	var swfpath = getRootPath() + '/js/common/uploadify.swf';
 	var uploadPath = getRootPath() + '/tools/upload';
@@ -26,7 +26,7 @@ function uploadImg() {
 	'fileObjName' : 'file',
 	'checkExisting' : false,
 	'onUploadSuccess' : function(file, data, response) {		
-		$("#imgPathID").val(JSON.parse(data).link);
+		$("#"+recordPathId).val(JSON.parse(data).link);
 		$("#uploadedPic").attr("src", getRootPath() + JSON.parse(data).link + "_small.jpg");
 	}
 	});

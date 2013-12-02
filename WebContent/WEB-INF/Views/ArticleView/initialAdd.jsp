@@ -15,10 +15,6 @@
  <img id="uploadedPic" src=" "/>
  
 <textarea  id="content"> </textarea>
-<select id="listClass">
-  <option value="0" selected="selected">大块独立列表</option>
-  <option value="1">横条连续列表</option>
-</select>
 
 <select id="articleClassId">
   <option value="1" selected="selected">教师风采</option>
@@ -54,7 +50,6 @@ function submitArticle()
 	article.title = $("#title").val();
 	article.imagePath = $('#imgPathID').val();
 	article.content = $('#content').val();
-	article.listClass = $('#listClass').val();
 	article.articleClassId = $('#articleClassId').val();
 	alert(JSON.stringify(article));
 	var url = getRootPath() + "/article/store/add";
