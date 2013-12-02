@@ -65,7 +65,7 @@ tragger.style.visibility = "hidden";
 <div class="A-Title">${activity.voteTitle}</div>
 <div class="A-date">${startDate}</div>
 <div class="A-img">
-<img src="../../userimages/${activity.votePicture}"></div>
+<img src="../../${activity.votePicture}"></div>
 <div class="A-singleblock">${activity.voteSummary}</div>
 
 <c:forEach items = "${activityresult}" var = "itemResult" >
@@ -76,7 +76,7 @@ tragger.style.visibility = "hidden";
       </c:if>
       <c:if test = "${not empty itemResult.voteItem.itemImage}">
          <div class="vote-result-name">
-            <img src="../../userimages/${itemResult.voteItem.itemImage}" />
+            <img src="../../${itemResult.voteItem.itemImage}" />
          </div>
       </c:if>
       <div class="vote-result-bar" style="width:${percent}%"></div>
