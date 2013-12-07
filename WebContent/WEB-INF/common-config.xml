@@ -31,7 +31,8 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
                 <property name = "supportedMediaTypes">
                       <list>
                           <value>text/plain;charset=UTF-8</value> 
-                          <value>application/json;charset=utf-8</value>   
+                          <value>application/json;charset=utf-8</value>
+                          <value>application/x-www-form-urlencoded</value>   
                      </list> 
                        
                 </property>   

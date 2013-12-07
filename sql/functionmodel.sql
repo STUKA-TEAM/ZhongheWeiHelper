@@ -1,8 +1,47 @@
-# Host: 127.0.0.1  (Version: 5.5.32)
-# Date: 2013-11-22 18:10:50
+﻿# Host: 127.0.0.1  (Version: 5.5.32)
+# Date: 2013-12-03 23:07:58
 # Generator: MySQL-Front 5.3  (Build 4.43)
 
 /*!40101 SET NAMES utf8 */;
+
+#
+# Structure for table "article_class"
+#
+
+DROP TABLE IF EXISTS `article_class`;
+CREATE TABLE `article_class` (
+  `ArticleClassId` int(11) NOT NULL AUTO_INCREMENT,
+  `ArticleClassName` varchar(50) NOT NULL DEFAULT '',
+  `ArticleClassShowType` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ArticleClassId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "article_class"
+#
+
+INSERT INTO `article_class` VALUES (1,'教师风采',1),(2,'儿童天地',0),(3,'教师心得',0),(4,'园所新闻',0),(5,'育儿技巧',0);
+
+#
+# Structure for table "article_record"
+#
+
+DROP TABLE IF EXISTS `article_record`;
+CREATE TABLE `article_record` (
+  `ArticleId` int(11) NOT NULL AUTO_INCREMENT,
+  `Title` varchar(50) NOT NULL DEFAULT '',
+  `Date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ImagePath` varchar(100) DEFAULT NULL,
+  `Content` varchar(2000) NOT NULL DEFAULT '',
+  `ArticleClassId` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ArticleId`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+#
+# Data for table "article_record"
+#
+
+INSERT INTO `article_record` VALUES (1,'家长如何和孩子谈心','2013-12-01 23:38:55','/userimages/fcd2f6cae9ff43d9bf9a6a112380d49a','你常和自己的孩子谈心吗?也许你会说:小毛孩子，啥也不懂，有什么好谈的?或者认为，一天到晚忙个不休，哪有功夫和小家伙解嘴皮才还有一些家长。生怕有损于自己的‘“尊严“，对孩子，开口便训，更不用说谈心了、其实，谈心是对孩子进行教育的一种行之有效的方法，做父毋的都应该学会运用这种方法。\n<br/>\n怎样和孩子谈心呢?<br/>\n第一，要明确谈心的作用语言是思维的信号，通过谈心，父毋可以了解孩子想些什么，便于有针对性地进行教育，通过谈心，父母可以和孩子交换思想，增进感情，有些家长强调工作、家务忙，没有时间同孩子谈心，如果他们懂得了谈心的作用，一定能够找到机会的。<br/>\n第二，要了解孩子的心理特点上小学的孩子，心直口快，喜怒衰乐都挂在脸上。他们在学校碰到高兴的事或不愉快的事，往往不等父母问，就会一古脑儿倒出来，这个时期，孩子的思想是向家长敞开的、但是，随着年龄的增长，孩子的心理也相应地会起变化，上中学的孩子就不再象上小学时那么直爽了，话也说得少了，似乎和爸爸妈妈不那么贴心了，常常不肯向父母吐露直情，国外有的心理学家称这一时期为“青少年闭锁期”。处于这一时期的孩子，虽然沉默寡言，把秘密埋藏在心里。但同时又希望被父毋和其他人理解了解了孩子的这些矛盾的心理特点，家长就应主动接近孩子，经常有意识地找孩子谈心，及时消除他们的思想顾虑，使孩子有话愿意和父母讲、只有这样，家长才能掌握孩子的思想脉络，有针对性地进行教育，<br/>\n第三，父母要用平等的态度和孩子谈心。孩子年龄小，不容易理解深奥的道理，当孩子对一咎问题理解不了时，家长不能训斥，要做到”三心”。即“，细心”、，‘耐心”和“恒心”。细心，就是要仔细观察分析孩子的言行，善于发现孩子身上的优点和缺点;耐心，就是要态度和蔼，循循许诱，不搞“一言堂”，更不能搞“审讯式”，恒心。就是要有打“持久战”的精神，反复给孩子作思想工作，直到做通。总之，家长只有用平等的态度和孩子谈心，才可能有成效。',5);
 
 #
 # Structure for table "lottery_activity"
@@ -82,6 +121,26 @@ CREATE TABLE `lottery_record` (
 # Data for table "lottery_record"
 #
 
+
+#
+# Structure for table "message_record"
+#
+
+DROP TABLE IF EXISTS `message_record`;
+CREATE TABLE `message_record` (
+  `MessageId` int(11) NOT NULL AUTO_INCREMENT,
+  `Content` varchar(500) DEFAULT NULL,
+  `UserName` varchar(30) DEFAULT NULL,
+  `Contact` varchar(50) DEFAULT NULL,
+  `Date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`MessageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "message_record"
+#
+
+INSERT INTO `message_record` VALUES (1,'adsf',NULL,'dsfa',NULL),(2,'1231','bai','123','2013-12-01 16:39:39'),(3,'adsf','asdf','adf','2013-12-01 16:42:56'),(4,'asfsad','','','2013-12-01 16:46:09'),(5,'adsfasff','','','2013-12-01 16:46:20'),(6,'阿斯蒂芬飞','阿斯蒂芬','爱的色放飞','2013-12-01 18:19:06'),(7,'           阿斯蒂芬飞       ','阿斯蒂芬','爱的色放飞','2013-12-01 18:19:13'),(8,'           阿斯蒂芬飞       ','阿斯蒂芬','爱的色放飞','2013-12-01 18:27:09'),(9,'','','','2013-12-01 18:28:26'),(10,'','','','2013-12-01 18:29:17'),(11,'','','','2013-12-01 18:29:29'),(12,'asdfaadsfs','','','2013-12-01 18:38:30');
 
 #
 # Structure for table "order_dishes"
@@ -284,6 +343,7 @@ CREATE TABLE `vote_activity` (
 # Data for table "vote_activity"
 #
 
+INSERT INTO `vote_activity` VALUES (1,'下面哪个新年亲子活动最有趣的？','为迎接新年，我们将举行一年一度的亲子活动，您对下面哪个活动比较感兴趣？','/userimages/1d2c7b431d874c78984edffa9f4cfab6','2014-11-25 00:00:00','2014-12-25 00:00:00',1,3,1,3);
 
 #
 # Structure for table "vote_advice"
@@ -320,6 +380,7 @@ CREATE TABLE `vote_item` (
 # Data for table "vote_item"
 #
 
+INSERT INTO `vote_item` VALUES (1,1,NULL,'歌唱比赛'),(2,1,NULL,'做游戏'),(3,1,NULL,'读故事');
 
 #
 # Structure for table "vote_item_choice"
@@ -337,6 +398,7 @@ CREATE TABLE `vote_item_choice` (
 # Data for table "vote_item_choice"
 #
 
+INSERT INTO `vote_item_choice` VALUES (1,1,'sdfaffafffaf'),(2,2,'sdfaffafffaf');
 
 #
 # Structure for table "weather_city"
@@ -348,10 +410,9 @@ CREATE TABLE `weather_city` (
   `UserOpenID` varchar(30) NOT NULL COMMENT '微信服务器返回的用户ID',
   `City` varchar(10) NOT NULL DEFAULT '' COMMENT '城市名',
   PRIMARY KEY (`RecordId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "weather_city"
 #
 
-INSERT INTO `weather_city` VALUES (1,'1','上海'),(2,'1','北京');
