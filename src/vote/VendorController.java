@@ -89,7 +89,7 @@ public class VendorController {
 	}
 	
 	/**
-	 * @Description: 再次利用已结束活动
+	 * @Description: 再次利用已结束活动  --> insert
 	 * @param voteId
 	 * @param model
 	 * @return
@@ -105,7 +105,7 @@ public class VendorController {
 		
 		((ConfigurableApplicationContext)context).close();
 		
-		return "reuseActivity";
+		return "createActivity";
 	}
 	
 	/**
